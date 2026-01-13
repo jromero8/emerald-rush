@@ -34,7 +34,16 @@ func _ready() -> void:
 	rng = RandomNumberGenerator.new()
 	generate_map()
 	create_miners()
-	#Game.progress.add_money(900000)
+	#debug_mode()
+
+func debug_mode() -> void:
+	Game.progress.add_money(99999999999999)
+	Game.progress.add_resource(0, 999999999)
+	Game.progress.add_resource(1, 999999999)
+	Game.progress.add_resource(2, 999999999)
+	Game.progress.add_resource(3, 999999999)
+	Game.progress.add_resource(4, 999999999)
+	Game.progress.add_resource(5, 999999999)
 
 func create_miners() -> void:
 	var miners = 1 + Game.progress.get_inventory(Game.ShopItem.WORKER)
@@ -102,7 +111,7 @@ func generate_map() -> void:
 	for i in range(0, crystal_cave_pos):
 		for j in range(-25, 25):
 			var res_coords : Vector2i = get_resource_cell_id(Game.ResourceType.ROCK, i)
-			if rng.randi_range(1, 100) < Game.get_resource_chance():
+			if rng.randi_range(1, 100) <= Game.get_resource_chance():
 				if i > 0:
 						res_coords = get_resource_cell_id(Game.ResourceType.IRON, i)
 				if i > 20:
@@ -156,12 +165,14 @@ func create_crystal_cave(crystal_cave_pos : int) -> void:
 	var height = 15
 	for i in range(crystal_cave_pos, crystal_cave_pos + height):
 		if i == crystal_cave_pos + height - 1:
+			tile_map_layer.set_cell(Vector2i(Game.map_limit_left - 3, i), 0, Vector2i(3, 6))
 			for j in range(Game.map_limit_left -2, Game.map_limit_right + 2):
 				tile_map_layer.set_cell(Vector2i(j, i), 0, Vector2i(0, 6))
+			tile_map_layer.set_cell(Vector2i(Game.map_limit_right + 2, i), 0, Vector2i(4, 6))
 		else:
 			tile_map_layer.set_cell(Vector2i(Game.map_limit_left - 3, i), 0, Vector2i(1, 6))
 			tile_map_layer.set_cell(Vector2i(Game.map_limit_right + 2, i), 0, Vector2i(2, 6))
-			for j in range(Game.map_limit_left, Game.map_limit_right + 1):
+			for j in range(Game.map_limit_left - 2, Game.map_limit_right + 2):
 				if i == crystal_cave_pos + height - 2:
 					tile_map_layer_crystal_background.set_cell(Vector2i(j, i), 0, Vector2i(rng.randi_range(0, 6), 8))
 				else:
