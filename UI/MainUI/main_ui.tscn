@@ -1,0 +1,388 @@
+[gd_scene load_steps=13 format=3 uid="uid://baxaaffyoicup"]
+
+[ext_resource type="Script" uid="uid://urj13yytqn63" path="res://UI/MainUI/main_ui.gd" id="1_1nvy6"]
+[ext_resource type="PackedScene" uid="uid://bdhuuvemvfnj6" path="res://UI/UpgradeUI/upgrade_ui.tscn" id="2_1yvig"]
+[ext_resource type="PackedScene" uid="uid://c8cuhf80tnb44" path="res://UI/InventoryPanel/inventory_panel.tscn" id="2_g3lw5"]
+[ext_resource type="Texture2D" uid="uid://db71ydopcyp3x" path="res://UI/ShopUI/shop.png" id="3_4yaab"]
+[ext_resource type="PackedScene" uid="uid://bxpg33j11ul4m" path="res://UI/ShopUI/shop_ui.tscn" id="3_ky12q"]
+[ext_resource type="PackedScene" uid="uid://bl60pjn1dmmoh" path="res://UI/ResourceUI/resource_ui.tscn" id="3_o0e8e"]
+[ext_resource type="PackedScene" uid="uid://b2rba1vvn86ow" path="res://UI/GameOverUI/game_over_ui.tscn" id="7_h6lqs"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_1yvig"]
+color = Color(1, 1, 1, 1)
+thickness = 2
+vertical = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wakv"]
+atlas = ExtResource("3_4yaab")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70avc"]
+atlas = ExtResource("3_4yaab")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0e8e"]
+atlas = ExtResource("3_4yaab")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6lqs"]
+atlas = ExtResource("3_4yaab")
+region = Rect2(0, 32, 16, 16)
+
+[node name="MainUi" type="CanvasLayer"]
+script = ExtResource("1_1nvy6")
+
+[node name="VBoxContainerHeader" type="VBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 153.0
+grow_horizontal = 2
+size_flags_horizontal = 2
+theme_override_constants/separation = 2
+
+[node name="HBoxContainerHEader" type="HBoxContainer" parent="VBoxContainerHeader"]
+layout_mode = 2
+
+[node name="VBoxContainerResources" type="VBoxContainer" parent="VBoxContainerHeader/HBoxContainerHEader"]
+layout_mode = 2
+
+[node name="HBoxContainerResourceUIRock" parent="VBoxContainerHeader/HBoxContainerHEader/VBoxContainerResources" instance=ExtResource("3_o0e8e")]
+layout_mode = 2
+
+[node name="HBoxContainerResourceUIIron" parent="VBoxContainerHeader/HBoxContainerHEader/VBoxContainerResources" instance=ExtResource("3_o0e8e")]
+layout_mode = 2
+resource_type = 1
+
+[node name="HBoxContainerResourceUICopper" parent="VBoxContainerHeader/HBoxContainerHEader/VBoxContainerResources" instance=ExtResource("3_o0e8e")]
+layout_mode = 2
+resource_type = 2
+
+[node name="HBoxContainerResourceUISilver" parent="VBoxContainerHeader/HBoxContainerHEader/VBoxContainerResources" instance=ExtResource("3_o0e8e")]
+layout_mode = 2
+resource_type = 3
+
+[node name="HBoxContainerResourceUIGold" parent="VBoxContainerHeader/HBoxContainerHEader/VBoxContainerResources" instance=ExtResource("3_o0e8e")]
+layout_mode = 2
+resource_type = 4
+
+[node name="HBoxContainerResourceUI4" parent="VBoxContainerHeader/HBoxContainerHEader/VBoxContainerResources" instance=ExtResource("3_o0e8e")]
+layout_mode = 2
+resource_type = 5
+
+[node name="VSeparator3" type="VSeparator" parent="VBoxContainerHeader/HBoxContainerHEader"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/separator = SubResource("StyleBoxLine_1yvig")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainerHeader"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainerHeader/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainerDay" type="HBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -144.0
+offset_right = 144.0
+offset_bottom = 39.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="LabelDay" type="Label" parent="HBoxContainerDay"]
+layout_mode = 2
+text = "Day 1"
+
+[node name="ButtonStartDay" type="Button" parent="HBoxContainerDay"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Start Day"
+
+[node name="ButtonEndDay" type="Button" parent="HBoxContainerDay"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "End Day"
+
+[node name="PanelContainerTired" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -167.5
+offset_top = -55.0
+offset_right = 167.5
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerTired"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerTired/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LabelEndDay" type="Label" parent="PanelContainerTired/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Your workers are tired!"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerTired/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ButtonRestartDay" type="Button" parent="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Next Day"
+
+[node name="ButtonShop" type="Button" parent="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Shop"
+
+[node name="ButtonUpgrades" type="Button" parent="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Upgrades"
+
+[node name="PanelContainerUpgrades" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = -217.0
+offset_right = 172.0
+offset_bottom = 217.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerUpgrades"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerUpgrades/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelUpgrades" type="Label" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "UPGRADES"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="UpgradeUi" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+
+[node name="UpgradeUi2" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 1
+
+[node name="UpgradeUi3" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 2
+
+[node name="UpgradeUi4" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 3
+
+[node name="UpgradeUi5" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 4
+
+[node name="UpgradeUi6" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 5
+
+[node name="ButtonCloseUpgrades" type="Button" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Close"
+
+[node name="PanelContainerShop" parent="." instance=ExtResource("3_ky12q")]
+visible = false
+
+[node name="PanelContainerGameOver" parent="." instance=ExtResource("7_h6lqs")]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -364.0
+offset_top = 22.0
+offset_right = 365.0
+offset_bottom = 199.0
+grow_horizontal = 2
+size_flags_vertical = 0
+
+[node name="PanelContainerMaintitle" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -208.0
+offset_top = -255.0
+offset_right = 209.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerMaintitle"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerMaintitle/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelTitle" type="Label" parent="PanelContainerMaintitle/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "EMERALD RUSH"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainerMaintitle/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Find the secret emerald cave!"
+
+[node name="ButtonPlay" type="Button" parent="PanelContainerMaintitle/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+text = "Play"
+
+[node name="VBoxContainerRight" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -68.0
+offset_bottom = 125.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainerRight"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="TextureButtonMusic" type="TextureButton" parent="VBoxContainerRight/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Music on/off"
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_5wakv")
+stretch_mode = 4
+
+[node name="TextureButtonSound" type="TextureButton" parent="VBoxContainerRight/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Sound on/off"
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_70avc")
+stretch_mode = 4
+
+[node name="VBoxContainerStats" type="VBoxContainer" parent="VBoxContainerRight"]
+visible = false
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainerRight/VBoxContainerStats"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainerRight/VBoxContainerStats/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainerRight/VBoxContainerStats/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Amount of workers"
+texture = SubResource("AtlasTexture_o0e8e")
+stretch_mode = 4
+
+[node name="LabelWorkers" type="Label" parent="VBoxContainerRight/VBoxContainerStats/PanelContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Amount of workers"
+mouse_filter = 1
+text = "1"
+
+[node name="PanelContainerMoney" type="PanelContainer" parent="VBoxContainerRight/VBoxContainerStats"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="HBoxContainerMoney" type="HBoxContainer" parent="VBoxContainerRight/VBoxContainerStats/PanelContainerMoney"]
+layout_mode = 2
+
+[node name="LabelMoney" type="Label" parent="VBoxContainerRight/VBoxContainerStats/PanelContainerMoney/HBoxContainerMoney"]
+layout_mode = 2
+size_flags_horizontal = 8
+tooltip_text = "Money"
+mouse_filter = 1
+text = "$"
+
+[node name="LabelMoneyValue" type="Label" parent="VBoxContainerRight/VBoxContainerStats/PanelContainerMoney/HBoxContainerMoney"]
+layout_mode = 2
+size_flags_horizontal = 10
+tooltip_text = "Money"
+mouse_filter = 1
+text = "0"
+horizontal_alignment = 2
+
+[node name="PanelContainerDepth" type="PanelContainer" parent="VBoxContainerRight/VBoxContainerStats"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainerRight/VBoxContainerStats/PanelContainerDepth"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainerRight/VBoxContainerStats/PanelContainerDepth/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Depth"
+texture = SubResource("AtlasTexture_h6lqs")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="LabelDepth" type="Label" parent="VBoxContainerRight/VBoxContainerStats/PanelContainerDepth/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Depth"
+mouse_filter = 1
+text = "0"
+
+[node name="PanelContainerInventory" parent="VBoxContainerRight" instance=ExtResource("2_g3lw5")]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainerDay/ButtonStartDay" to="." method="_on_button_start_day_pressed"]
+[connection signal="pressed" from="HBoxContainerDay/ButtonEndDay" to="." method="_on_button_end_day_pressed"]
+[connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonRestartDay" to="." method="_on_button_restart_day_pressed"]
+[connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonShop" to="." method="_on_button_shop_pressed"]
+[connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonUpgrades" to="." method="_on_button_upgrades_pressed"]
+[connection signal="pressed" from="PanelContainerUpgrades/MarginContainer/VBoxContainer/ButtonCloseUpgrades" to="." method="_on_button_close_upgrades_pressed"]
+[connection signal="pressed" from="PanelContainerMaintitle/MarginContainer/VBoxContainer/ButtonPlay" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonMusic" to="." method="_on_texture_button_music_pressed"]
+[connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonSound" to="." method="_on_texture_button_sound_pressed"]

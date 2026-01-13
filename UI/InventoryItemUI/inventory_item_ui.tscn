@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx7t3yvmukqjk"]
+
+[ext_resource type="Script" uid="uid://ctnb8e324nhxc" path="res://UI/InventoryItemUI/inventory_item_ui.gd" id="1_kmvkf"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_kmvkf"]
+color = Color(1, 1, 1, 1)
+thickness = 2
+vertical = true
+
+[node name="InventoryItemUI" type="HBoxContainer"]
+script = ExtResource("1_kmvkf")
+
+[node name="VSeparator" type="VSeparator" parent="."]
+visible = false
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_kmvkf")
+
+[node name="LabelTitle" type="Label" parent="."]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="LabelValue" type="Label" parent="."]
+layout_mode = 2
+
+[node name="ButtonUse" type="Button" parent="."]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Use
+"
+
+[connection signal="pressed" from="ButtonUse" to="." method="_on_button_use_pressed"]

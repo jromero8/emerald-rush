@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1e7e3qy2ul3s"]
+
+[ext_resource type="Script" uid="uid://b8luy81uys5sj" path="res://UI/ShopItemSellUI/shop_item_sell_ui.gd" id="1_2d478"]
+
+[node name="HBoxContainerSellItem" type="HBoxContainer"]
+theme_override_constants/separation = 5
+script = ExtResource("1_2d478")
+
+[node name="LabelTitle" type="Label" parent="."]
+layout_mode = 2
+text = "Rock:"
+
+[node name="LabelPrice" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "($1)"
+
+[node name="LabelAmount" type="Label" parent="."]
+layout_mode = 2
+text = "20"
+
+[node name="Buttonx1" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "x1"
+
+[node name="Buttonx10" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "x10"
+
+[node name="ButtonAll" type="Button" parent="."]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "ALL"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="Buttonx1" to="." method="_on_buttonx_1_pressed"]
+[connection signal="pressed" from="Buttonx10" to="." method="_on_buttonx_10_pressed"]
+[connection signal="pressed" from="ButtonAll" to="." method="_on_button_all_pressed"]

@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=4 uid="uid://b11iqk6n1u2tt"]
+
+[ext_resource type="Script" uid="uid://b45lhhb276yxu" path="res://World/world.gd" id="1_8a836"]
+[ext_resource type="TileSet" uid="uid://db23fbuwcvxgn" path="res://World/world_tile_set.tres" id="1_62w18"]
+[ext_resource type="TileSet" uid="uid://bk1np0ij51fe3" path="res://Trees/trees_tile_set.tres" id="2_3f78f"]
+[ext_resource type="PackedScene" uid="uid://c17b7r3k5f7v" path="res://Sun/sun.tscn" id="2_yf0ba"]
+[ext_resource type="PackedScene" uid="uid://baxaaffyoicup" path="res://UI/MainUI/main_ui.tscn" id="3_j8job"]
+[ext_resource type="TileSet" uid="uid://bqe0iolhxmrcx" path="res://Mountain/mountain_tile_set.tres" id="3_yf0ba"]
+[ext_resource type="PackedScene" uid="uid://70defpp8571s" path="res://Clouds/cloud.tscn" id="5_k8do8"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_8a836")
+
+[node name="Sun" parent="." instance=ExtResource("2_yf0ba")]
+position = Vector2(225, -161)
+
+[node name="TileMapLayerCrystalBackground" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_62w18")
+
+[node name="TileMapLayerMountains2" type="TileMapLayer" parent="."]
+position = Vector2(-19, -43)
+tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAA=")
+tile_set = ExtResource("3_yf0ba")
+
+[node name="TileMapLayerMountains" type="TileMapLayer" parent="."]
+position = Vector2(47, -26)
+tile_map_data = PackedByteArray("AAAAAP//AAAAAAEAAAA=")
+tile_set = ExtResource("3_yf0ba")
+
+[node name="TileMapLayerTreesDark" type="TileMapLayer" parent="."]
+position = Vector2(-0.71, 0)
+tile_map_data = PackedByteArray("AAACAP//AAABAAEAAAADAP//AAABAAEAAAAEAP//AAABAAEAAAAFAP//AAABAAEAAAD5////AAABAAEAAAD6////AAABAAEAAAD7////AAABAAEAAAD8////AAABAAEAAAD9////AAABAAEAAAD+////AAABAAEAAAD/////AAABAAEAAAAAAP//AAABAAEAAAAHAP//AAABAAEAAAAGAP//AAABAAEAAAABAP//AAABAAEAAAA=")
+tile_set = ExtResource("2_3f78f")
+
+[node name="TileMapLayerTreesBack" type="TileMapLayer" parent="."]
+position = Vector2(32, 0)
+tile_map_data = PackedByteArray("AAD7////AAABAAAAAAACAP//AAABAAAAAAADAP//AAABAAAAAAD8////AAABAAAAAAD6////AAABAAAAAAD5////AAAAAAEAAAD4////AAAAAAEAAAAEAP//AAABAAAAAAAFAP//AAAAAAEAAAAGAP//AAAAAAAAAAA=")
+tile_set = ExtResource("2_3f78f")
+
+[node name="TileMapLayerTrees" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD7////AAAAAAEAAAD8////AAAAAAAAAAADAP//AAAAAAEAAAAEAP//AAAAAAAAAAAFAP//AAABAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAEAAAD6////AAAAAAEAAAD5////AAAAAAEAAAA=")
+tile_set = ExtResource("2_3f78f")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_62w18")
+
+[node name="TileMapLayerOcclusion" type="TileMapLayer" parent="."]
+tile_set = ExtResource("1_62w18")
+
+[node name="MainUi" parent="." instance=ExtResource("3_j8job")]
+
+[node name="TimerTired" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="Cloud" parent="." instance=ExtResource("5_k8do8")]
+position = Vector2(-178, -110)
+
+[node name="Cloud2" parent="." instance=ExtResource("5_k8do8")]
+position = Vector2(4, -101)
+
+[node name="Cloud3" parent="." instance=ExtResource("5_k8do8")]
+position = Vector2(178, -120)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(8, -42)
+zoom = Vector2(2, 2)
+
+[node name="Cloud4" parent="." instance=ExtResource("5_k8do8")]
+position = Vector2(378, -108)
+
+[connection signal="timeout" from="TimerTired" to="." method="_on_timer_tired_timeout"]

@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://deadn3cptb4is"]
+
+[ext_resource type="Texture2D" uid="uid://bkq8rkr6cj285" path="res://World/world.png" id="1_5f4ic"]
+[ext_resource type="Script" uid="uid://fenx44wq442v" path="res://Spark/spark.gd" id="1_i8gik"]
+
+[sub_resource type="Animation" id="Animation_5f4ic"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [64]
+}
+
+[sub_resource type="Animation" id="Animation_i8gik"]
+resource_name = "spark"
+length = 0.35
+step = 0.0333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.03333333, 3.7252903e-09, 0.03333334, 0.06666668, 0.10000001, 0.13333334, 0.16666669, 0.20000002, 0.23333335, 0.26666668, 0.28453317),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [64, 65, 66, 67, 68, 69, 70, 67, 66, 65, 64]
+}
+
+[sub_resource type="Animation" id="Animation_xinar"]
+resource_name = "spark_2"
+length = 0.3
+step = 0.0333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.03333333, 3.7252903e-09, 0.03333334, 0.06666668, 0.10000001, 0.13333334, 0.16666669, 0.20000002, 0.23333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [64, 81, 82, 83, 84, 83, 82, 81, 64]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xinar"]
+_data = {
+&"RESET": SubResource("Animation_5f4ic"),
+&"spark": SubResource("Animation_i8gik"),
+&"spark_2": SubResource("Animation_xinar")
+}
+
+[node name="Spark" type="Node2D"]
+script = ExtResource("1_i8gik")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_5f4ic")
+hframes = 16
+vframes = 16
+frame = 64
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_xinar")
+}
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bl60pjn1dmmoh"]
+
+[ext_resource type="Script" uid="uid://bochr4pvavmja" path="res://UI/ResourceUI/resource_ui.gd" id="1_07p5t"]
+
+[node name="HBoxContainerResourceUI" type="PanelContainer"]
+offset_right = 119.0
+offset_bottom = 39.0
+script = ExtResource("1_07p5t")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LabelTitle" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Copper:"
+
+[node name="LabelValue" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "0"

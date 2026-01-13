@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8cuhf80tnb44"]
+
+[ext_resource type="Script" uid="uid://ba4es0whm2mnd" path="res://UI/InventoryPanel/inventory_panel.gd" id="1_a2wm3"]
+
+[node name="PanelContainerInventory" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 39.0
+grow_horizontal = 2
+size_flags_vertical = 0
+script = ExtResource("1_a2wm3")
+
+[node name="VBoxContainerItems" type="VBoxContainer" parent="."]
+layout_mode = 2
