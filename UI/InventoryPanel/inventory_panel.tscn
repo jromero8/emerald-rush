@@ -7,8 +7,10 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 39.0
 grow_horizontal = 2
+size_flags_horizontal = 8
 size_flags_vertical = 0
 script = ExtResource("1_a2wm3")
 
 [node name="VBoxContainerItems" type="VBoxContainer" parent="."]
 layout_mode = 2
+size_flags_horizontal = 8
