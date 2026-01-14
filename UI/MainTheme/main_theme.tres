@@ -1,6 +1,5 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://wkaubmy3e101"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://wkaubmy3e101"]
 
-[ext_resource type="FontFile" uid="uid://cqsqi0yh600tb" path="res://UI/MainTheme/Fonts/VT323-Regular.ttf" id="1_4k3xj"]
 [ext_resource type="Texture2D" uid="uid://cudqrxf8k5lkc" path="res://UI/panels.png" id="1_oowc4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mkbik"]
@@ -73,7 +72,6 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [resource]
-default_font = ExtResource("1_4k3xj")
 default_font_size = 32
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_disabled_color = Color(1, 1, 1, 1)
@@ -93,7 +91,6 @@ Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
 Button/font_sizes/font_size = 32
-Button/fonts/font = ExtResource("1_4k3xj")
 Button/styles/disabled = SubResource("StyleBoxTexture_mkbik")
 Button/styles/focus = SubResource("StyleBoxTexture_8st03")
 Button/styles/hover = SubResource("StyleBoxTexture_oowc4")
