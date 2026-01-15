@@ -13,7 +13,8 @@ enum ResourceType {
 	COPPER,
 	SILVER,
 	GOLD,
-	CRYSTAL,
+	PLATINUM,
+	EMERALD,
 }
 
 enum UpgradeType {
@@ -40,6 +41,7 @@ const amount_per_resource = [
 	8,
 	12,
 	15,
+	20,
 	20
 ]
 
@@ -47,9 +49,10 @@ const money_per_resource = [
 	1,
 	5,
 	20,
-	100,
-	500,
-	1000
+	50,
+	120,
+	200,
+	0
 ]
 
 const item_base_cost = [
@@ -94,11 +97,8 @@ func get_resource_value(res) -> int:
 	return money_per_resource[res]
 
 func get_resource_title(rs : ResourceType) -> String:
-	if rs == ResourceType.CRYSTAL:
-		return "Platinum"
-	else:
-		var res_name : String = ResourceType.keys()[rs]
-		return res_name.capitalize()
+	var res_name : String = ResourceType.keys()[rs]
+	return res_name.capitalize()
 
 func get_upgrade_title(up : UpgradeType) -> String:
 	match up:

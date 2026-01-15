@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="1-bit-mining"
+config/name="emerald-rush"
 run/main_scene="uid://b11iqk6n1u2tt"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/show_image=false
@@ -41,7 +41,7 @@ theme/default_font_antialiasing=0
 theme/default_font_hinting=0
 theme/lcd_subpixel_layout=0
 theme/custom="uid://wkaubmy3e101"
-theme/custom_font="uid://cfhq2xecdcokl"
+theme/custom_font="uid://cs1djxstlb80w"
 
 [rendering]
 

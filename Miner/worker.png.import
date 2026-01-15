@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://du4jvndc31dxp"
-path="res://.godot/imported/miner.png-0a9af5dcb8025524974658f2ed115d38.ctex"
+path="res://.godot/imported/worker.png-199f2ec38bbe16028c935bd784ca4154.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Miner/miner.png"
-dest_files=["res://.godot/imported/miner.png-0a9af5dcb8025524974658f2ed115d38.ctex"]
+source_file="res://Miner/worker.png"
+dest_files=["res://.godot/imported/worker.png-199f2ec38bbe16028c935bd784ca4154.ctex"]
 
 [params]
 

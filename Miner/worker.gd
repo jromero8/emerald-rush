@@ -1,7 +1,7 @@
 extends Node2D
-class_name Miner
+class_name Worker
 
-enum MinerState {
+enum WorkerState {
 	IDLE,
 	WALKING,
 	MINING,
@@ -12,7 +12,7 @@ enum MinerState {
 
 var ground : TileMapLayer
 var target : Vector2i = Vector2i.DOWN
-var state : MinerState  = MinerState.IDLE
+var state : WorkerState  = WorkerState.IDLE
 var fall_speed : float = 60
 var walk_speed : float = 20
 var walking_direction : Vector2i = Vector2i.ZERO
@@ -39,31 +39,31 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if energy <= 0 or Game.day_ended:
-		state = MinerState.TIRED
+		state = WorkerState.TIRED
 
-	if ground.get_cell_source_id(get_current_tile() + Vector2i.DOWN) < 0 and state != MinerState.WALKING:
-		state = MinerState.FALLING
+	if ground.get_cell_source_id(get_current_tile() + Vector2i.DOWN) < 0 and state != WorkerState.WALKING:
+		state = WorkerState.FALLING
 	else:
-		if (global_position - ground.map_to_local(get_current_tile())).length() > 0.1 and state != MinerState.WALKING:
-			state = MinerState.FALLING
+		if (global_position - ground.map_to_local(get_current_tile())).length() > 0.1 and state != WorkerState.WALKING:
+			state = WorkerState.FALLING
 	
-	if (!Game.day_started or is_far_ahead()) and state != MinerState.FALLING:
-		state = MinerState.WAITING
+	if (!Game.day_started or is_far_ahead()) and state != WorkerState.FALLING:
+		state = WorkerState.WAITING
 	
-	if Game.is_crystal_cave_floor(ground.get_cell_atlas_coords(get_current_tile() + Vector2i.DOWN)) and state != MinerState.FALLING:
-		state = MinerState.WAITING
+	if Game.is_crystal_cave_floor(ground.get_cell_atlas_coords(get_current_tile() + Vector2i.DOWN)) and state != WorkerState.FALLING:
+		state = WorkerState.WAITING
 		Game.start_game_over()
 
 	match state:
-		MinerState.TIRED:
+		WorkerState.TIRED:
 			play_animation("tired")
-		MinerState.IDLE:
+		WorkerState.IDLE:
 			if !walk_sideways():
 				search_next_target()
 			play_animation("idle")
-		MinerState.MINING:
+		WorkerState.MINING:
 			if ground.get_cell_source_id(get_current_tile() + target) < 0:
-				state = MinerState.IDLE
+				state = WorkerState.IDLE
 			else:
 				if Time.get_ticks_msec() > mine_cooldown + last_mine:
 					last_mine = Time.get_ticks_msec()
@@ -73,7 +73,7 @@ func _physics_process(delta: float) -> void:
 						play_animation("mine_right")
 					else:
 						play_animation("mine")
-		MinerState.FALLING:
+		WorkerState.FALLING:
 			play_animation("fall")
 			if ground.get_cell_source_id(get_current_tile() + Vector2i.DOWN) < 0:
 				global_position = global_position.move_toward(ground.map_to_local(get_current_tile() + Vector2i.DOWN), fall_speed * delta)
@@ -81,8 +81,8 @@ func _physics_process(delta: float) -> void:
 				global_position = global_position.move_toward(ground.map_to_local(get_current_tile()), fall_speed * delta)
 				if (global_position - ground.map_to_local(get_current_tile())).length() < 0.1:
 					global_position - ground.map_to_local(get_current_tile())
-					state = MinerState.IDLE
-		MinerState.WALKING:
+					state = WorkerState.IDLE
+		WorkerState.WALKING:
 			if target == Vector2i.LEFT:
 				play_animation("walk_left")
 			else:
@@ -93,11 +93,11 @@ func _physics_process(delta: float) -> void:
 				global_position = global_position.move_toward(ground.map_to_local(get_current_tile()), walk_speed * delta)
 			if (global_position - ground.map_to_local(get_current_tile())).length() < 0.1:
 				global_position - ground.map_to_local(get_current_tile())
-				state = MinerState.IDLE
+				state = WorkerState.IDLE
 				target = Vector2i.ZERO
-		MinerState.WAITING:
+		WorkerState.WAITING:
 			play_animation("tired")
-			state = MinerState.IDLE
+			state = WorkerState.IDLE
 
 
 func mine() -> void:
@@ -129,7 +129,7 @@ func search_next_target() -> void:
 				target = Vector2i.RIGHT
 			if World.get_instance().is_resource(get_current_tile() + Vector2i.LEFT):
 				target = Vector2i.LEFT
-		state = MinerState.MINING
+		state = WorkerState.MINING
 
 func first_check_left() -> bool:
 	return rng.randi_range(0, 1) == 0
@@ -141,25 +141,25 @@ func walk_sideways() -> bool:
 		return false
 	if get_current_tile().y > 2:
 		if ground.get_cell_source_id(get_current_tile() + Vector2i.DOWN) >= 0:
-			if state == MinerState.IDLE:
+			if state == WorkerState.IDLE:
 				if target != Vector2i.ZERO:
 					if first_check_left():
 						if ground.get_cell_source_id(get_current_tile() + Vector2i.LEFT) < 0:
 							target = Vector2i.LEFT
-							state = MinerState.WALKING
+							state = WorkerState.WALKING
 							return true
 						elif ground.get_cell_source_id(get_current_tile() + Vector2i.RIGHT) < 0:
 							target = Vector2i.RIGHT
-							state = MinerState.WALKING
+							state = WorkerState.WALKING
 							return true
 					else:
 						if ground.get_cell_source_id(get_current_tile() + Vector2i.RIGHT) < 0:
 							target = Vector2i.RIGHT
-							state = MinerState.WALKING
+							state = WorkerState.WALKING
 							return true
 						elif ground.get_cell_source_id(get_current_tile() + Vector2i.LEFT) < 0:
 							target = Vector2i.LEFT
-							state = MinerState.WALKING
+							state = WorkerState.WALKING
 							return true
 	return false
 	
@@ -175,14 +175,14 @@ func play_animation(animation_name : String) -> void:
 
 func is_tired() -> bool:
 	return energy <= 0
-	#return state == MinerState.TIRED
+	#return state == WorkerState.TIRED
 
 func refill_energy() -> void:
 	energy = initial_energy
-	state = MinerState.IDLE
+	state = WorkerState.IDLE
 
 func is_far_ahead() -> bool:
-	for w : Miner in get_tree().get_nodes_in_group("worker"):
+	for w : Worker in get_tree().get_nodes_in_group("worker"):
 		if !w.is_tired():
 			if global_position.y > w.global_position.y and global_position.y - w.global_position.y > 200:
 				return true
