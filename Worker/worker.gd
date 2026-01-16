@@ -30,11 +30,11 @@ var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 @onready var animation_playerx_2: AnimationPlayer = $AnimationPlayerx2
 
 func _ready() -> void:
-	energy = base_energy + Game.progress.get_upgrade(Game.UpgradeType.ENERGY) * 15
+	energy = base_energy + Progress.get_upgrade(Progress.UpgradeType.ENERGY) * 15
 	initial_energy = energy
-	fall_speed = fall_speed + Game.progress.get_upgrade(Game.UpgradeType.SPEED) * 6
-	walk_speed = walk_speed + Game.progress.get_upgrade(Game.UpgradeType.SPEED) * 10
-	mine_cooldown = 500 - Game.progress.get_upgrade(Game.UpgradeType.SPEED) * 40
+	fall_speed = fall_speed + Progress.get_upgrade(Progress.UpgradeType.SPEED) * 6
+	walk_speed = walk_speed + Progress.get_upgrade(Progress.UpgradeType.SPEED) * 10
+	mine_cooldown = 500 - Progress.get_upgrade(Progress.UpgradeType.SPEED) * 40
 	sprite_2d.flip_h = rng.randi_range(0, 1) == 0
 
 func _physics_process(delta: float) -> void:
@@ -102,6 +102,7 @@ func _physics_process(delta: float) -> void:
 
 func mine() -> void:
 	if World.get_instance().mine(get_current_tile() + target):
+		print("anim")
 		animation_playerx_2.play("x2")
 	energy -= 1
 	update_energy_bar()
@@ -167,7 +168,7 @@ func walk_sideways() -> bool:
 func play_animation(animation_name : String) -> void:
 	var a = animation_name
 	if a == "mine" or a == "mine_left" or a == "mine_right" or a == "walk_left" or a == "walk_right":
-		animation_player.speed_scale = 1 + Game.progress.get_upgrade(Game.UpgradeType.SPEED) * 0.2
+		animation_player.speed_scale = 1 + Progress.get_upgrade(Progress.UpgradeType.SPEED) * 0.2
 	else:
 		animation_player.speed_scale = 1
 	animation_player.play(animation_name)

@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-@export var resource : Game.ResourceType
+@export var resource : Progress.ResourceType
 
 @onready var label_title: Label = $LabelTitle
 @onready var label_amount: Label = $LabelAmount
@@ -10,32 +10,32 @@ extends HBoxContainer
 @onready var button_all: Button = $ButtonAll
 
 func _ready() -> void:
-	Game.resource_updated.connect(_on_resource_updated)
+	Progress.resource_updated.connect(_on_resource_updated)
 
-func _on_resource_updated(res : Game.ResourceType) -> void:
+func _on_resource_updated(res : Progress.ResourceType) -> void:
 	if res == resource:
 		update_ui()
 
 func update_ui() -> void:
 	if label_title != null:
-		label_title.text = Game.get_resource_title(resource)
-		label_price.text = "($" + str(Game.get_resource_value(resource)) + ")"
-		label_amount.text = str(Game.progress.get_resource(resource))
-		buttonx_1.disabled = Game.progress.get_resource(resource) == 0
-		buttonx_10.disabled = Game.progress.get_resource(resource) < 10
-		button_all.disabled = Game.progress.get_resource(resource) == 0
+		label_title.text = Progress.get_resource_title(resource)
+		label_price.text = "($" + str(Progress.get_resource_value(resource)) + ")"
+		label_amount.text = str(Progress.get_resource(resource))
+		buttonx_1.disabled = Progress.get_resource(resource) == 0
+		buttonx_10.disabled = Progress.get_resource(resource) < 10
+		button_all.disabled = Progress.get_resource(resource) == 0
 	
 
 func _on_buttonx_1_pressed() -> void:
-	Game.progress.sell_resource(resource, 1)
+	Progress.sell_resource(resource, 1)
 
 
 func _on_buttonx_10_pressed() -> void:
-	Game.progress.sell_resource(resource, 10)
+	Progress.sell_resource(resource, 10)
 
 
 func _on_button_all_pressed() -> void:
-	Game.progress.sell_resource(resource, 999999999999999)
+	Progress.sell_resource(resource, 999999999999999)
 
 
 func _on_visibility_changed() -> void:

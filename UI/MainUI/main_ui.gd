@@ -18,8 +18,8 @@ extends CanvasLayer
 @onready var label_depth: Label = $VBoxContainerRight/VBoxContainerStats/PanelContainerDepth/HBoxContainer/LabelDepth
 
 func _ready() -> void:
-	Game.money_updated.connect(_on_money_updated)
-	Game.inventory_updated.connect(_on_inventory_updated)
+	Progress.money_updated.connect(_on_money_updated)
+	Progress.inventory_updated.connect(_on_inventory_updated)
 	hide_all_panels()
 	if Game.game_started:
 		panel_container_maintitle.visible = false
@@ -32,8 +32,8 @@ func _ready() -> void:
 	refresh_money()
 	refresh_workers()
 	button_end_day.visible = false
-	label_day.text = "Day " + str(Game.progress.day)
-	if Game.progress.day > 0:
+	label_day.text = "Day " + str(Progress.day)
+	if Progress.day > 0:
 		button_start_day.visible = false
 		await get_tree().create_timer(.1).timeout
 		_on_button_start_day_pressed()
@@ -60,19 +60,19 @@ func show_tired_panel() -> void:
 	panel_container_tired.visible = true
 
 
-func _on_inventory_updated(it : Game.ShopItem) -> void:
-	if it == Game.ShopItem.WORKER:
+func _on_inventory_updated(it : Progress.ShopItem) -> void:
+	if it == Progress.ShopItem.WORKER:
 		refresh_workers()
 
 func refresh_workers() -> void:
-	label_workers.text = str(Game.progress.get_inventory(Game.ShopItem.WORKER) + 1)
+	label_workers.text = str(Progress.get_inventory(Progress.ShopItem.WORKER) + 1)
 
 
 func _on_money_updated() -> void:
 	refresh_money()
 
 func refresh_money() -> void:
-	label_money_value.text = str(Game.progress.money)
+	label_money_value.text = str(Progress.money)
 
 
 func _on_button_restart_day_pressed() -> void:

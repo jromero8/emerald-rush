@@ -34,19 +34,9 @@ func _ready() -> void:
 	rng = RandomNumberGenerator.new()
 	generate_map()
 	create_workers()
-	#debug_mode()
-
-func debug_mode() -> void:
-	Game.progress.add_money(99999999999999)
-	Game.progress.add_resource(0, 999999999)
-	Game.progress.add_resource(1, 999999999)
-	Game.progress.add_resource(2, 999999999)
-	Game.progress.add_resource(3, 999999999)
-	Game.progress.add_resource(4, 999999999)
-	Game.progress.add_resource(5, 999999999)
 
 func create_workers() -> void:
-	var workers = 1 + Game.progress.get_inventory(Game.ShopItem.WORKER)
+	var workers = 1 + Progress.get_inventory(Progress.ShopItem.WORKER)
 	for i : int in range(0, workers):
 		var sign = -1
 		var offset = 0
@@ -69,7 +59,8 @@ func new_worker(pos : Vector2i, index : int) -> void:
 	add_child(m)
 
 func is_chance_for_double() -> bool:
-	var chance_for_double : int = Game.clover_active * 50 + Game.progress.get_upgrade(Game.UpgradeType.LUCK) * 5
+	var clover_mult = 1 if Progress.clover_used else 0
+	var chance_for_double : int = clover_mult * 50 + Progress.get_upgrade(Progress.UpgradeType.LUCK) * 5
 	chance_for_double = clampi(chance_for_double, 0, 100)
 	return rng.randi_range(1, 100) <= chance_for_double
 
@@ -78,8 +69,8 @@ func mine(pos : Vector2i) -> bool:
 	var is_double = false
 	var resource_type = get_cell_resource_id(pos)
 	if !resources.has(pos):
-		resources[pos] = Game.get_amount_per_resource(resource_type)
-	var strength = Game.progress.get_upgrade(Game.UpgradeType.STRENGTH) + 1
+		resources[pos] = Progress.get_amount_per_resource(resource_type)
+	var strength = Progress.get_upgrade(Progress.UpgradeType.STRENGTH) + 1
 	var amount = resources[pos]
 	var amount_to_mine = strength
 	if amount < amount_to_mine:
@@ -95,8 +86,8 @@ func mine(pos : Vector2i) -> bool:
 	else:
 		amount -= amount_to_mine
 	resources[pos] = amount
-	Game.add_resource(resource_type, amount_mined)
-	if resource_type == Game.ResourceType.ROCK:
+	Progress.add_resource(resource_type, amount_mined)
+	if resource_type == Progress.ResourceType.ROCK:
 		Audio.play_sound("mine", -20)
 	else:
 		Audio.play_sound("mine_res", -20)
@@ -107,38 +98,38 @@ func mine(pos : Vector2i) -> bool:
 
 func generate_map() -> void:
 	tile_map_layer.clear()
-	var crystal_cave_pos : int = 300
+	var crystal_cave_pos : int = 300 + 100 * Progress.get_prestige_level()
 	for i in range(0, crystal_cave_pos):
 		for j in range(-25, 25):
-			var res_coords : Vector2i = get_resource_cell_id(Game.ResourceType.ROCK, i)
-			if rng.randi_range(1, 100) <= Game.get_resource_chance():
+			var res_coords : Vector2i = get_resource_cell_id(Progress.ResourceType.ROCK, i)
+			if rng.randi_range(1, 100) <= Progress.get_resource_chance():
 				if i > 0:
 					if rng.randi_range(1, 100) < 40:
-						res_coords = get_resource_cell_id(Game.ResourceType.EMERALD, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.EMERALD, i)
 					else: 
-						res_coords = get_resource_cell_id(Game.ResourceType.IRON, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.IRON, i)
 				if i > 20:
 					if rng.randi_range(1, 100) < 20:
-						res_coords = get_resource_cell_id(Game.ResourceType.IRON, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.IRON, i)
 					else:
-						res_coords = get_resource_cell_id(Game.ResourceType.COPPER, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.COPPER, i)
 				if i > 50:
 					if rng.randi_range(1, 100) < 20:
-						res_coords = get_resource_cell_id(Game.ResourceType.COPPER, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.COPPER, i)
 					else:
-						res_coords = get_resource_cell_id(Game.ResourceType.SILVER, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.SILVER, i)
 				if i > 80:
 					if rng.randi_range(1, 100) < 20:
-						res_coords = get_resource_cell_id(Game.ResourceType.SILVER, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.SILVER, i)
 					else:
-						res_coords = get_resource_cell_id(Game.ResourceType.GOLD, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.GOLD, i)
 				if i > 120:
 					if rng.randi_range(1, 100) < 5:
-						res_coords = get_resource_cell_id(Game.ResourceType.COPPER, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.COPPER, i)
 					elif rng.randi_range(1, 100) < 20:
-						res_coords = get_resource_cell_id(Game.ResourceType.GOLD, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.GOLD, i)
 					else:
-						res_coords = get_resource_cell_id(Game.ResourceType.PLATINUM, i)
+						res_coords = get_resource_cell_id(Progress.ResourceType.PLATINUM, i)
 			tile_map_layer.set_cell(Vector2i(j, i), 0, res_coords)
 	occlude_map()
 	create_crystal_cave(crystal_cave_pos)
@@ -193,19 +184,19 @@ func create_sparks() -> void:
 			add_child(s)
 			
 	
-func get_resource_cell_id(res : Game.ResourceType, depth : int) -> Vector2i:
+func get_resource_cell_id(res : Progress.ResourceType, depth : int) -> Vector2i:
 	match res:
-		Game.ResourceType.IRON:
+		Progress.ResourceType.IRON:
 			return Vector2i(0, 1)
-		Game.ResourceType.COPPER:
+		Progress.ResourceType.COPPER:
 			return Vector2i(1, 1)
-		Game.ResourceType.SILVER:
+		Progress.ResourceType.SILVER:
 			return Vector2i(2, 1)
-		Game.ResourceType.GOLD:
+		Progress.ResourceType.GOLD:
 			return Vector2i(3, 1)
-		Game.ResourceType.PLATINUM:
+		Progress.ResourceType.PLATINUM:
 			return Vector2i(4, 1)
-		Game.ResourceType.EMERALD:
+		Progress.ResourceType.EMERALD:
 			return Vector2i(5, 1)
 		_:
 			var x = min(depth / 5 + 1, 3)
@@ -225,33 +216,33 @@ func update_camera_pos() -> void:
 func is_resource(pos : Vector2i) -> bool:
 	var atlas_coords = tile_map_layer.get_cell_atlas_coords(pos)
 	var resources_coords := [
-		get_resource_cell_id(Game.ResourceType.IRON, 0),
-		get_resource_cell_id(Game.ResourceType.COPPER, 0),
-		get_resource_cell_id(Game.ResourceType.SILVER, 0),
-		get_resource_cell_id(Game.ResourceType.GOLD, 0),
-		get_resource_cell_id(Game.ResourceType.PLATINUM, 0),
-		get_resource_cell_id(Game.ResourceType.EMERALD, 0),
+		get_resource_cell_id(Progress.ResourceType.IRON, 0),
+		get_resource_cell_id(Progress.ResourceType.COPPER, 0),
+		get_resource_cell_id(Progress.ResourceType.SILVER, 0),
+		get_resource_cell_id(Progress.ResourceType.GOLD, 0),
+		get_resource_cell_id(Progress.ResourceType.PLATINUM, 0),
+		get_resource_cell_id(Progress.ResourceType.EMERALD, 0),
 	]
 	return resources_coords.has(atlas_coords)
 
 
-func get_cell_resource_id(pos : Vector2i) -> Game.ResourceType:
+func get_cell_resource_id(pos : Vector2i) -> Progress.ResourceType:
 	var atlas_coords = tile_map_layer.get_cell_atlas_coords(pos)
 	match atlas_coords:
 		Vector2i(0, 1):
-			return Game.ResourceType.IRON
+			return Progress.ResourceType.IRON
 		Vector2i(1, 1):
-			return Game.ResourceType.COPPER
+			return Progress.ResourceType.COPPER
 		Vector2i(2, 1):
-			return Game.ResourceType.SILVER
+			return Progress.ResourceType.SILVER
 		Vector2i(3, 1):
-			return Game.ResourceType.GOLD
+			return Progress.ResourceType.GOLD
 		Vector2i(4, 1):
-			return Game.ResourceType.PLATINUM
+			return Progress.ResourceType.PLATINUM
 		Vector2i(5, 1):
-			return Game.ResourceType.EMERALD
+			return Progress.ResourceType.EMERALD
 		_:
-			return Game.ResourceType.ROCK
+			return Progress.ResourceType.ROCK
 
 func are_all_workers_tired() -> bool:
 	for c : Node in get_children():
@@ -268,7 +259,7 @@ func _on_timer_tired_timeout() -> void:
 
 func use_coffee() -> void:
 	main_ui.hide_all_windows()
-	var coffee_cups : int = Game.progress.get_inventory(Game.ShopItem.COFFEE)
+	var coffee_cups : int = Progress.get_inventory(Progress.ShopItem.COFFEE)
 	if coffee_cups > 0:
 		for i : int in range(0, coffee_cups):
 			var bottom_worker : Worker = null
@@ -281,8 +272,8 @@ func use_coffee() -> void:
 							bottom_worker = w
 			if bottom_worker != null:
 				bottom_worker.refill_energy()
-				Game.progress.add_inventory(Game.ShopItem.COFFEE, -1)
-		Game.coffee_used = true
+				Progress.add_inventory(Progress.ShopItem.COFFEE, -1)
+		Progress.coffee_used = true
 
 func get_depth() -> int:
 	var depth = 0

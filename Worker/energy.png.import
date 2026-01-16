@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db71ydopcyp3x"
-path="res://.godot/imported/shop.png-b45ade50f7b254bb545f686afe15c03a.ctex"
+uid="uid://bxjjakh6ma7nv"
+path="res://.godot/imported/energy.png-a09c37dd27acd045f00372f696c591cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/ShopUI/shop.png"
-dest_files=["res://.godot/imported/shop.png-b45ade50f7b254bb545f686afe15c03a.ctex"]
+source_file="res://Worker/energy.png"
+dest_files=["res://.godot/imported/energy.png-a09c37dd27acd045f00372f696c591cf.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bp1k5anq0va0k"]
 
 [ext_resource type="Script" uid="uid://dtyouaqfqpeog" path="res://UI/ShopItemBuyUI/shop_item_buy_ui.gd" id="1_fc53g"]
-[ext_resource type="Texture2D" uid="uid://db71ydopcyp3x" path="res://UI/ShopUI/shop.png" id="2_0dily"]
+[ext_resource type="Texture2D" uid="uid://db71ydopcyp3x" path="res://UI/Icons/icons.png" id="2_0dily"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ptum"]
 resource_local_to_scene = true

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxjjakh6ma7nv"
-path="res://.godot/imported/energy.png-305eaccb594d54faabc6ad5aba8abd95.ctex"
+uid="uid://igvg6owuodoh"
+path="res://.godot/imported/visitor.png-49500519d1110828bd58af32692b9d09.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Miner/energy.png"
-dest_files=["res://.godot/imported/energy.png-305eaccb594d54faabc6ad5aba8abd95.ctex"]
+source_file="res://Worker/visitor.png"
+dest_files=["res://.godot/imported/visitor.png-49500519d1110828bd58af32692b9d09.ctex"]
 
 [params]
 

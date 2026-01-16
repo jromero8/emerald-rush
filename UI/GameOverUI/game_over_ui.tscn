@@ -35,11 +35,22 @@ text = "Thank you for playing!
 Game made by Wired Pixels for the 1-BIT JAM 8"
 horizontal_alignment = 1
 
-[node name="ButtonPlayAgain" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+
+[node name="ButtonMainMenu" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_default_cursor_shape = 2
-text = "Play Again"
+text = "Main Menu"
+
+[node name="ButtonPrestige" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Prestige
+(1000 emeralds)"
 
 [node name="TimerThanks" type="Timer" parent="."]
 wait_time = 4.0
@@ -50,6 +61,7 @@ wait_time = 8.0
 one_shot = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonPlayAgain" to="." method="_on_button_play_again_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/ButtonMainMenu" to="." method="_on_button_play_again_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/ButtonPrestige" to="." method="_on_button_prestige_pressed"]
 [connection signal="timeout" from="TimerThanks" to="." method="_on_timer_thanks_timeout"]
 [connection signal="timeout" from="TimerPlayAgain" to="." method="_on_timer_play_again_timeout"]

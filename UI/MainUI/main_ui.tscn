@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://urj13yytqn63" path="res://UI/MainUI/main_ui.gd" id="1_1nvy6"]
 [ext_resource type="PackedScene" uid="uid://bdhuuvemvfnj6" path="res://UI/UpgradeUI/upgrade_ui.tscn" id="2_1yvig"]
 [ext_resource type="PackedScene" uid="uid://c8cuhf80tnb44" path="res://UI/InventoryPanel/inventory_panel.tscn" id="2_g3lw5"]
-[ext_resource type="Texture2D" uid="uid://db71ydopcyp3x" path="res://UI/ShopUI/shop.png" id="3_4yaab"]
+[ext_resource type="Texture2D" uid="uid://db71ydopcyp3x" path="res://UI/Icons/icons.png" id="3_4yaab"]
 [ext_resource type="PackedScene" uid="uid://bxpg33j11ul4m" path="res://UI/ShopUI/shop_ui.tscn" id="3_ky12q"]
 [ext_resource type="PackedScene" uid="uid://bl60pjn1dmmoh" path="res://UI/ResourceUI/resource_ui.tscn" id="3_o0e8e"]
 [ext_resource type="PackedScene" uid="uid://b2rba1vvn86ow" path="res://UI/GameOverUI/game_over_ui.tscn" id="7_h6lqs"]
@@ -165,71 +165,6 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "Upgrades"
 
-[node name="PanelContainerUpgrades" type="PanelContainer" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -172.0
-offset_top = -217.0
-offset_right = 172.0
-offset_bottom = 217.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainerUpgrades"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerUpgrades/MarginContainer"]
-layout_mode = 2
-
-[node name="LabelUpgrades" type="Label" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "UPGRADES"
-horizontal_alignment = 1
-
-[node name="GridContainer" type="GridContainer" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
-layout_mode = 2
-columns = 2
-
-[node name="UpgradeUi" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
-layout_mode = 2
-
-[node name="UpgradeUi2" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
-layout_mode = 2
-upgrade_type = 1
-
-[node name="UpgradeUi3" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
-layout_mode = 2
-upgrade_type = 2
-
-[node name="UpgradeUi4" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
-layout_mode = 2
-upgrade_type = 3
-
-[node name="UpgradeUi5" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
-layout_mode = 2
-upgrade_type = 4
-
-[node name="UpgradeUi6" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
-layout_mode = 2
-upgrade_type = 5
-
-[node name="ButtonCloseUpgrades" type="Button" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-text = "Close"
-
-[node name="PanelContainerShop" parent="." instance=ExtResource("3_ky12q")]
-visible = false
-
 [node name="PanelContainerGameOver" parent="." instance=ExtResource("7_h6lqs")]
 visible = false
 anchors_preset = 5
@@ -388,12 +323,81 @@ layout_mode = 2
 [node name="PanelContainerPrestigeTree" parent="." instance=ExtResource("8_5wakv")]
 visible = false
 
+[node name="PanelContainerUpgrades" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -172.0
+offset_top = -217.0
+offset_right = 172.0
+offset_bottom = 217.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerUpgrades"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerUpgrades/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelUpgrades" type="Label" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "UPGRADES"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="UpgradeUi" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+
+[node name="UpgradeUi2" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 1
+
+[node name="UpgradeUi3" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 2
+
+[node name="UpgradeUi4" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 3
+
+[node name="UpgradeUi5" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 4
+
+[node name="UpgradeUi6" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer/GridContainer" instance=ExtResource("2_1yvig")]
+layout_mode = 2
+upgrade_type = 5
+
+[node name="ButtonCloseUpgrades" type="Button" parent="PanelContainerUpgrades/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Close"
+
+[node name="PanelContainerShop" parent="." instance=ExtResource("3_ky12q")]
+visible = false
+offset_left = -461.5
+offset_top = -235.5
+offset_right = 461.5
+offset_bottom = 235.5
+
 [connection signal="pressed" from="HBoxContainerDay/ButtonStartDay" to="." method="_on_button_start_day_pressed"]
 [connection signal="pressed" from="HBoxContainerDay/ButtonEndDay" to="." method="_on_button_end_day_pressed"]
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonRestartDay" to="." method="_on_button_restart_day_pressed"]
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonShop" to="." method="_on_button_shop_pressed"]
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonUpgrades" to="." method="_on_button_upgrades_pressed"]
-[connection signal="pressed" from="PanelContainerUpgrades/MarginContainer/VBoxContainer/ButtonCloseUpgrades" to="." method="_on_button_close_upgrades_pressed"]
 [connection signal="pressed" from="PanelContainerMaintitle/MarginContainer/VBoxContainer/ButtonPlay" to="." method="_on_button_play_pressed"]
 [connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonMusic" to="." method="_on_texture_button_music_pressed"]
 [connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonSound" to="." method="_on_texture_button_sound_pressed"]
+[connection signal="pressed" from="PanelContainerUpgrades/MarginContainer/VBoxContainer/ButtonCloseUpgrades" to="." method="_on_button_close_upgrades_pressed"]
