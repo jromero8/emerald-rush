@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				global_position = global_position.move_toward(ground.map_to_local(get_current_tile()), fall_speed * delta)
 				if (global_position - ground.map_to_local(get_current_tile())).length() < 0.1:
-					global_position - ground.map_to_local(get_current_tile())
+					global_position = ground.map_to_local(get_current_tile())
 					state = WorkerState.IDLE
 		WorkerState.WALKING:
 			if target == Vector2i.LEFT:
@@ -92,7 +92,7 @@ func _physics_process(delta: float) -> void:
 			else:
 				global_position = global_position.move_toward(ground.map_to_local(get_current_tile()), walk_speed * delta)
 			if (global_position - ground.map_to_local(get_current_tile())).length() < 0.1:
-				global_position - ground.map_to_local(get_current_tile())
+				global_position = ground.map_to_local(get_current_tile())
 				state = WorkerState.IDLE
 				target = Vector2i.ZERO
 		WorkerState.WAITING:
@@ -109,8 +109,7 @@ func mine() -> void:
 
 func update_energy_bar() -> void:
 	var perc : float = (float(energy) / float(initial_energy)) * 10
-	perc = ceili(clamp(perc, 0, 10))
-	sprite_2d_progress.frame = perc
+	sprite_2d_progress.frame = ceili(clamp(perc, 0, 10))
 
 
 func get_current_tile() -> Vector2i:

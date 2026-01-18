@@ -14,11 +14,11 @@ config/name="emerald-rush"
 run/main_scene="uid://b11iqk6n1u2tt"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/show_image=false
-config/icon="res://icon.svg"
 
 [autoload]
 
 Audio="*res://Audio/audio.gd"
+SaveGame="*res://Globals/save_game.gd"
 Progress="*res://Globals/progress.gd"
 Game="*res://Globals/game.gd"
 

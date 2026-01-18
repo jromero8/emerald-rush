@@ -30,7 +30,6 @@ func _ready() -> void:
 			sprite_2d.vframes = 2
 			sprite_2d.frame = 3
 			
-
 func _process(delta: float) -> void:
 	global_position += Vector2.LEFT * speed * delta
 	if global_position.x < -400:

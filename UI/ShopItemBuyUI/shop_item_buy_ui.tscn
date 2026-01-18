@@ -49,4 +49,6 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "Buy"
 
+[connection signal="mouse_entered" from="LabelHint" to="." method="_on_label_hint_mouse_entered"]
+[connection signal="mouse_exited" from="LabelHint" to="." method="_on_label_hint_mouse_exited"]
 [connection signal="pressed" from="ButtonBuy" to="." method="_on_button_buy_pressed"]

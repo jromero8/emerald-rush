@@ -1,0 +1,109 @@
+[gd_scene load_steps=10 format=3 uid="uid://wagwop44p6uc"]
+
+[ext_resource type="Texture2D" uid="uid://nsllpw7rsojs" path="res://UI/ConfigUI/grabber.png" id="1_5nn5a"]
+[ext_resource type="Script" uid="uid://bwoq4t0rivqvt" path="res://UI/ConfigUI/panel_container_config.gd" id="1_ahap0"]
+[ext_resource type="Texture2D" uid="uid://dtk2rsprot0cg" path="res://UI/ConfigUI/background.png" id="1_q3o3g"]
+[ext_resource type="Texture2D" uid="uid://bfhmbavd1awcj" path="res://UI/ConfigUI/tick.png" id="2_h11mc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5nn5a"]
+texture = ExtResource("1_q3o3g")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+expand_margin_top = 10.0
+expand_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h11mc"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p525t"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahap0"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymfqs"]
+bg_color = Color(1, 1, 1, 1)
+
+[node name="PanelContainerConfig" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ahap0")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="LabelConfig" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Config"
+horizontal_alignment = 1
+
+[node name="HBoxContainerMusic" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelMusic" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainerMusic"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Music:"
+
+[node name="HSliderMusic" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainerMusic"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("1_5nn5a")
+theme_override_icons/grabber_highlight = ExtResource("1_5nn5a")
+theme_override_icons/tick = ExtResource("2_h11mc")
+theme_override_styles/slider = SubResource("StyleBoxTexture_5nn5a")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_h11mc")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_p525t")
+max_value = 1.0
+step = 0.01
+
+[node name="HBoxContainerSound" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainerSound"]
+layout_mode = 2
+text = "Sound:"
+
+[node name="HSliderSound" type="HSlider" parent="MarginContainer/VBoxContainer/HBoxContainerSound"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("1_5nn5a")
+theme_override_icons/grabber_highlight = ExtResource("1_5nn5a")
+theme_override_icons/tick = ExtResource("2_h11mc")
+theme_override_styles/slider = SubResource("StyleBoxTexture_5nn5a")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ahap0")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ymfqs")
+max_value = 1.0
+step = 0.01
+
+[node name="ButtonClose" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Close
+"
+
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainerMusic/HSliderMusic" to="." method="_on_h_slider_music_value_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/HBoxContainerSound/HSliderSound" to="." method="_on_h_slider_sound_value_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonClose" to="." method="_on_button_close_pressed"]

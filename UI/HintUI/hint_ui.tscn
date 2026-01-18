@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://c88nnw5wbhb43"]
+
+[ext_resource type="Script" uid="uid://pd2fmkb2svis" path="res://UI/HintUI/hint_ui.gd" id="1_d44qx"]
+
+[node name="HintUi" type="PanelContainer"]
+offset_right = 144.0
+offset_bottom = 38.0
+size_flags_horizontal = 0
+mouse_filter = 2
+script = ExtResource("1_d44qx")
+
+[node name="LabelHint" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "hint label"
+
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

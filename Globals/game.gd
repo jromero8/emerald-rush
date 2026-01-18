@@ -1,18 +1,26 @@
 extends Node
 
 signal workers_tired
+signal show_hint(hint_text : String, gp : Vector2)
+signal hide_hint
+signal show_prestige_upgrades
+
+enum GameState {
+	MAIN_MENU,
+	STARTED
+}
 
 const map_limit_left = -14
 const map_limit_right = 15
 
-var game_started := false
+var game_state : GameState = GameState.MAIN_MENU
 var day_started := false
 var day_ended := false
 var game_over = false
 
 func _ready() -> void:
-	Audio.play_music("boardwalk", -40)
-
+	Audio.play_music("boardwalk", -20)
+	load_config()
 
 func load_next_day():
 	Progress.next_day()
@@ -32,7 +40,7 @@ func start_game_over() -> void:
 		game_over = true
 
 func new_game() -> void:
-	game_started = false
+	game_state = GameState.STARTED
 	day_started = false
 	game_over = false
 	Progress.hard_reset()
@@ -41,3 +49,22 @@ func new_game() -> void:
 func Prestige() -> void:
 	Progress.prestige()
 	load_next_day()
+
+func load_config() -> void:
+	var config : Dictionary = SaveGame.load_data("config")
+	if config != null:
+		for opt_id : StringName in config:
+			match opt_id:
+				"music_volume":
+					Audio.set_music_volume(config.get(opt_id))
+				"sound_volume":
+					Audio.set_sound_volume(config.get(opt_id))
+
+
+func save_config() -> void:
+	var options : Dictionary[String, Variant]= {
+		"music_volume" = Audio.get_music_volume(),
+		"sound_volume" = Audio.get_sound_volume(),
+	}
+	SaveGame.save_data("config", options)
+	

@@ -7,6 +7,7 @@ var music_on : bool = true:
 	get = get_music
 
 var sound_on := true
+var sound_volume_db : float = 0
 
 var audio_files := {}
 
@@ -23,7 +24,7 @@ func set_music(on : bool) -> void:
 func get_music() -> bool:
 	return music_on
 
-func play_sound(sound_name: String, volume_db: float = 0, from_pitch: float = 1, to_pitch: float = 1, channel : String = "") -> void:
+func play_sound(sound_name: String, from_pitch: float = 1, to_pitch: float = 1, channel : String = "") -> void:
 	var sound := get_sound_by_name(sound_name)
 	if sound:
 		var rng : = RandomNumberGenerator.new()
@@ -32,7 +33,7 @@ func play_sound(sound_name: String, volume_db: float = 0, from_pitch: float = 1,
 		if a != null:
 			a.stream = sound
 			a.pitch_scale = pitch
-			a.volume_db = volume_db
+			a.volume_db = sound_volume_db
 			if sound_on:
 				a.play()
 			else:
@@ -41,12 +42,11 @@ func play_sound(sound_name: String, volume_db: float = 0, from_pitch: float = 1,
 func stop_music() -> void:
 	music_player.stop()
 
-func play_music(music_name: String, volume_db: float = 0, pitch: float = 1) -> void:
+func play_music(music_name: String, volume_db: float = 0) -> void:
 	var music := get_sound_by_name(music_name)
 	if music or music_name == "":
 		if music_player.stream != music:
 			music_player.stream = music
-			music_player.pitch_scale = pitch
 			music_player.volume_db = volume_db
 			if music_on:
 				music_player.play()
@@ -119,3 +119,29 @@ func stop_all_sounds() -> void:
 	for c : AudioStreamPlayer in get_children():
 		if c != music_player:
 			c.stop()
+
+func set_music_volume(_volume_db : float = 0) -> void:
+	var v : float = _volume_db
+	if v <= -50:
+		v = -1000
+	music_player.volume_db = v
+
+
+func get_music_volume() -> float:
+	if music_player.volume_db < -50:
+		return -50
+	else:
+		return music_player.volume_db
+
+func set_sound_volume(_volume_db : float = 0) -> void:
+	print("-")
+	sound_volume_db = _volume_db
+	if sound_volume_db <= -50:
+		sound_volume_db = -1000
+	for c : AudioStreamPlayer in get_children():
+		if c != music_player:
+			print("volume")
+			c.volume_db = sound_volume_db
+
+func get_sound_volume() -> float:
+	return sound_volume_db

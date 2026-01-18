@@ -36,20 +36,20 @@ func _ready() -> void:
 	create_workers()
 
 func create_workers() -> void:
-	var workers = 1 + Progress.get_inventory(Progress.ShopItem.WORKER)
+	var workers = 1 + Progress.get_inventory(Progress.InventoryItem.WORKER) + Progress.get_upgrade(Progress.UpgradeType.PRESTIGE_STARTING_WORKERS)
 	for i : int in range(0, workers):
-		var sign = -1
+		var _sign = -1
 		var offset = 0
 		var pos = ceil(float(i) / 2) * 2
 		if i % 2 == 0:
-			sign = 1
+			_sign = 1
 		if i > 10:
 			offset = 0
 			pos = pos - 11
-		var x = offset + pos * sign
+		var x = offset + pos * _sign
 		new_worker(Vector2i(x, ground_level), i)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	update_camera_pos()
 
 func new_worker(pos : Vector2i, index : int) -> void:
@@ -88,9 +88,9 @@ func mine(pos : Vector2i) -> bool:
 	resources[pos] = amount
 	Progress.add_resource(resource_type, amount_mined)
 	if resource_type == Progress.ResourceType.ROCK:
-		Audio.play_sound("mine", -20)
+		Audio.play_sound("mine")
 	else:
-		Audio.play_sound("mine_res", -20)
+		Audio.play_sound("mine_res")
 	if amount == 0:
 		tile_map_layer.set_cell(pos)
 		occlude_neighbors(pos)
@@ -98,7 +98,7 @@ func mine(pos : Vector2i) -> bool:
 
 func generate_map() -> void:
 	tile_map_layer.clear()
-	var crystal_cave_pos : int = 300 + 100 * Progress.get_prestige_level()
+	var crystal_cave_pos : int = 2 + 100 * Progress.get_prestige_level()
 	for i in range(0, crystal_cave_pos):
 		for j in range(-25, 25):
 			var res_coords : Vector2i = get_resource_cell_id(Progress.ResourceType.ROCK, i)
@@ -259,7 +259,7 @@ func _on_timer_tired_timeout() -> void:
 
 func use_coffee() -> void:
 	main_ui.hide_all_windows()
-	var coffee_cups : int = Progress.get_inventory(Progress.ShopItem.COFFEE)
+	var coffee_cups : int = Progress.get_inventory(Progress.InventoryItem.COFFEE)
 	if coffee_cups > 0:
 		for i : int in range(0, coffee_cups):
 			var bottom_worker : Worker = null
@@ -272,7 +272,7 @@ func use_coffee() -> void:
 							bottom_worker = w
 			if bottom_worker != null:
 				bottom_worker.refill_energy()
-				Progress.add_inventory(Progress.ShopItem.COFFEE, -1)
+				Progress.add_inventory(Progress.InventoryItem.COFFEE, -1)
 		Progress.coffee_used = true
 
 func get_depth() -> int:

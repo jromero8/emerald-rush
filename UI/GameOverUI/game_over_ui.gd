@@ -27,7 +27,7 @@ func _on_timer_play_again_timeout() -> void:
 
 func _on_button_play_again_pressed() -> void:
 	visible = false
-	Game.game_started = false
+	Game.game_state = Game.GameState.MAIN_MENU
 	Game.new_game()
 
 

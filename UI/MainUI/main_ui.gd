@@ -16,12 +16,16 @@ extends CanvasLayer
 @onready var label_money_value: Label = $VBoxContainerRight/VBoxContainerStats/PanelContainerMoney/HBoxContainerMoney/LabelMoneyValue
 @onready var label_workers: Label = $VBoxContainerRight/VBoxContainerStats/PanelContainer/HBoxContainer/LabelWorkers
 @onready var label_depth: Label = $VBoxContainerRight/VBoxContainerStats/PanelContainerDepth/HBoxContainer/LabelDepth
+@onready var button_continue: Button = $PanelContainerMaintitle/MarginContainer/VBoxContainer/ButtonContinue
+@onready var panel_container_config: PanelContainer = $PanelContainerConfig
+@onready var texture_button_config: TextureButton = $VBoxContainerRight/HBoxContainer/TextureButtonConfig
 
 func _ready() -> void:
 	Progress.money_updated.connect(_on_money_updated)
 	Progress.inventory_updated.connect(_on_inventory_updated)
+	button_continue.visible = Progress.day > 0
 	hide_all_panels()
-	if Game.game_started:
+	if Game.game_state == Game.GameState.STARTED:
 		panel_container_maintitle.visible = false
 		v_box_container_header.visible = true
 		h_box_container_day.visible = true
@@ -33,12 +37,13 @@ func _ready() -> void:
 	refresh_workers()
 	button_end_day.visible = false
 	label_day.text = "Day " + str(Progress.day)
-	if Progress.day > 0:
+	if Game.game_state == Game.GameState.STARTED:
 		button_start_day.visible = false
 		await get_tree().create_timer(.1).timeout
 		_on_button_start_day_pressed()
+	texture_button_config.visible = Game.game_state == Game.GameState.STARTED
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Game.game_over:
 		hide_all_panels()
 		panel_container_game_over.visible = true
@@ -60,12 +65,12 @@ func show_tired_panel() -> void:
 	panel_container_tired.visible = true
 
 
-func _on_inventory_updated(it : Progress.ShopItem) -> void:
-	if it == Progress.ShopItem.WORKER:
+func _on_inventory_updated(it : Progress.InventoryItem) -> void:
+	if it == Progress.InventoryItem.WORKER:
 		refresh_workers()
 
 func refresh_workers() -> void:
-	label_workers.text = str(Progress.get_inventory(Progress.ShopItem.WORKER) + 1)
+	label_workers.text = str(Progress.get_inventory(Progress.InventoryItem.WORKER) + 1)
 
 
 func _on_money_updated() -> void:
@@ -106,14 +111,21 @@ func _on_button_end_day_pressed() -> void:
 	Game.end_day()
 
 
-func _on_button_play_pressed() -> void:
+func _on_button_continue_pressed() -> void:
 	visible = false
-	Game.game_started = true
+	Game.game_state = Game.GameState.STARTED
+	Game.load_next_day()
+
+func _on_button_new_game_pressed() -> void:
+	visible = false
+	Game.game_state = Game.GameState.STARTED
+	Progress.hard_reset()
 	Game.load_next_day()
 
 
-func _on_texture_button_music_pressed() -> void:
-	Audio.music_on = !Audio.music_on
+func _on_texture_button_pressed() -> void:
+	panel_container_config.visible = !panel_container_config.visible
 
-func _on_texture_button_sound_pressed() -> void:
-	Audio.sound_on = !Audio.sound_on
+
+func _on_button_config_pressed() -> void:
+	panel_container_config.visible = true

@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-var shop_item : Progress.ShopItem = Progress.ShopItem.COFFEE
+var shop_item : Progress.InventoryItem = Progress.InventoryItem.COFFEE
 
 @onready var label_title: Label = $LabelTitle
 @onready var label_value: Label = $LabelValue
@@ -22,7 +22,7 @@ func update_ui() -> void:
 	else:
 		visible = false
 	match shop_item:
-		Progress.ShopItem.COFFEE:
+		Progress.InventoryItem.COFFEE:
 			if !Game.day_started:
 				button_use.disabled = true
 			else:
@@ -30,14 +30,14 @@ func update_ui() -> void:
 					button_use.disabled = true
 				else:
 					button_use.disabled = !World.get_instance().are_all_workers_tired()
-		Progress.ShopItem.CLOVER:
+		Progress.InventoryItem.CLOVER:
 			if Progress.clover_used:
 				button_use.disabled = true
 			else:
 				if World.get_instance() != null:
 					button_use.disabled = World.get_instance().are_all_workers_tired()
 
-func _on_inventory_change(it : Progress.ShopItem) -> void:
+func _on_inventory_change(it : Progress.InventoryItem) -> void:
 	if it == shop_item:
 		update_ui()
 

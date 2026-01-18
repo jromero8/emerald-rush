@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://baxaaffyoicup"]
+[gd_scene load_steps=14 format=3 uid="uid://baxaaffyoicup"]
 
 [ext_resource type="Script" uid="uid://urj13yytqn63" path="res://UI/MainUI/main_ui.gd" id="1_1nvy6"]
 [ext_resource type="PackedScene" uid="uid://bdhuuvemvfnj6" path="res://UI/UpgradeUI/upgrade_ui.tscn" id="2_1yvig"]
@@ -6,16 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://db71ydopcyp3x" path="res://UI/Icons/icons.png" id="3_4yaab"]
 [ext_resource type="PackedScene" uid="uid://bxpg33j11ul4m" path="res://UI/ShopUI/shop_ui.tscn" id="3_ky12q"]
 [ext_resource type="PackedScene" uid="uid://bl60pjn1dmmoh" path="res://UI/ResourceUI/resource_ui.tscn" id="3_o0e8e"]
-[ext_resource type="Texture2D" uid="uid://b6bmwcuowrws0" path="res://UI/ConfigUI/config_icon.png" id="4_4hoyo"]
 [ext_resource type="PackedScene" uid="uid://b2rba1vvn86ow" path="res://UI/GameOverUI/game_over_ui.tscn" id="7_h6lqs"]
 [ext_resource type="PackedScene" uid="uid://ctoocosadmjcq" path="res://UI/PrestigeTreeUI/panel_container_prestige_tree.tscn" id="8_5wakv"]
-[ext_resource type="PackedScene" uid="uid://wagwop44p6uc" path="res://UI/ConfigUI/panel_container_config.tscn" id="10_4hoyo"]
-[ext_resource type="PackedScene" uid="uid://c88nnw5wbhb43" path="res://UI/HintUI/hint_ui.tscn" id="11_onv3x"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_1yvig"]
 color = Color(1, 1, 1, 1)
 thickness = 2
 vertical = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wakv"]
+atlas = ExtResource("3_4yaab")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70avc"]
+atlas = ExtResource("3_4yaab")
+region = Rect2(48, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o0e8e"]
 atlas = ExtResource("3_4yaab")
@@ -196,7 +201,7 @@ theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerMaintitle/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 20
 
 [node name="LabelTitle" type="Label" parent="PanelContainerMaintitle/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -212,7 +217,6 @@ horizontal_alignment = 1
 
 [node name="ButtonContinue" type="Button" parent="PanelContainerMaintitle/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
 text = "Continue"
 
 [node name="ButtonNewGame" type="Button" parent="PanelContainerMaintitle/MarginContainer/VBoxContainer"]
@@ -220,12 +224,6 @@ layout_mode = 2
 size_flags_horizontal = 4
 mouse_default_cursor_shape = 2
 text = "New Game"
-
-[node name="ButtonConfig" type="Button" parent="PanelContainerMaintitle/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_default_cursor_shape = 2
-text = "Config"
 
 [node name="VBoxContainerRight" type="VBoxContainer" parent="."]
 anchors_preset = 1
@@ -240,11 +238,20 @@ size_flags_horizontal = 8
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="TextureButtonConfig" type="TextureButton" parent="VBoxContainerRight/HBoxContainer"]
+[node name="TextureButtonMusic" type="TextureButton" parent="VBoxContainerRight/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+tooltip_text = "Music on/off"
 mouse_default_cursor_shape = 2
-texture_normal = ExtResource("4_4hoyo")
+texture_normal = SubResource("AtlasTexture_5wakv")
+stretch_mode = 4
+
+[node name="TextureButtonSound" type="TextureButton" parent="VBoxContainerRight/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Sound on/off"
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_70avc")
 stretch_mode = 4
 
 [node name="VBoxContainerStats" type="VBoxContainer" parent="VBoxContainerRight"]
@@ -317,6 +324,9 @@ text = "0"
 [node name="PanelContainerInventory" parent="VBoxContainerRight" instance=ExtResource("2_g3lw5")]
 layout_mode = 2
 
+[node name="PanelContainerPrestigeTree" parent="." instance=ExtResource("8_5wakv")]
+visible = false
+
 [node name="PanelContainerUpgrades" type="PanelContainer" parent="."]
 visible = false
 anchors_preset = 8
@@ -386,19 +396,6 @@ offset_top = -235.5
 offset_right = 461.5
 offset_bottom = 235.5
 
-[node name="PanelContainerConfig" parent="." instance=ExtResource("10_4hoyo")]
-visible = false
-offset_left = -136.0
-offset_top = -196.0
-offset_right = 136.0
-offset_bottom = -24.0
-
-[node name="HintUi" parent="." instance=ExtResource("11_onv3x")]
-visible = false
-top_level = true
-
-[node name="PanelContainerPrestigeTree" parent="." instance=ExtResource("8_5wakv")]
-
 [connection signal="pressed" from="HBoxContainerDay/ButtonStartDay" to="." method="_on_button_start_day_pressed"]
 [connection signal="pressed" from="HBoxContainerDay/ButtonEndDay" to="." method="_on_button_end_day_pressed"]
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonRestartDay" to="." method="_on_button_restart_day_pressed"]
@@ -406,6 +403,6 @@ top_level = true
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonUpgrades" to="." method="_on_button_upgrades_pressed"]
 [connection signal="pressed" from="PanelContainerMaintitle/MarginContainer/VBoxContainer/ButtonContinue" to="." method="_on_button_continue_pressed"]
 [connection signal="pressed" from="PanelContainerMaintitle/MarginContainer/VBoxContainer/ButtonNewGame" to="." method="_on_button_new_game_pressed"]
-[connection signal="pressed" from="PanelContainerMaintitle/MarginContainer/VBoxContainer/ButtonConfig" to="." method="_on_button_config_pressed"]
-[connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonConfig" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonMusic" to="." method="_on_texture_button_music_pressed"]
+[connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonSound" to="." method="_on_texture_button_sound_pressed"]
 [connection signal="pressed" from="PanelContainerUpgrades/MarginContainer/VBoxContainer/ButtonCloseUpgrades" to="." method="_on_button_close_upgrades_pressed"]

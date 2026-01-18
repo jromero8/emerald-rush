@@ -18,7 +18,7 @@ func _on_upgrade_applied(up : Progress.UpgradeType) -> void:
 	if up == upgrade_type:
 		update_ui()
 
-func _on_resource_updated(res : Progress.ResourceType) -> void:
+func _on_resource_updated(_res : Progress.ResourceType) -> void:
 	update_ui()
 
 func update_ui() -> void:

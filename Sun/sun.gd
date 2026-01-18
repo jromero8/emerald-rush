@@ -4,7 +4,7 @@ var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 var last_change : int = 0
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Time.get_ticks_msec() > last_change + 300:
 		last_change = Time.get_ticks_msec()
 		var new_id = rng.randi_range(0, 3)
