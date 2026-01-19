@@ -3,7 +3,6 @@ extends PanelContainer
 @export var resource_type : Progress.ResourceType
 @onready var label_title: Label = $HBoxContainer/LabelTitle
 @onready var label_value: Label = $HBoxContainer/LabelValue
-@onready var button_prestige: Button = $HBoxContainer/ButtonPrestige
 
 func _ready() -> void:
 	Progress.resource_updated.connect(_on_resource_updated)
@@ -21,8 +20,3 @@ func update_ui():
 		label_value.text = str(value)
 	else:
 		visible = false
-	button_prestige.visible = resource_type == Progress.ResourceType.EMERALD
-
-
-func _on_button_prestige_pressed() -> void:
-	Game.show_prestige_upgrades.emit()

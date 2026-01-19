@@ -7,12 +7,11 @@ func _ready() -> void:
 	Game.show_hint.connect(_on_show_hint)
 	Game.hide_hint.connect(_on_hide_hint)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if visible:
-		print("aa")
 		global_position = get_global_mouse_position() - Vector2(size.x, 0)
 
-func _on_show_hint(hint_text : String, gp : Vector2) -> void:
+func _on_show_hint(hint_text : String) -> void:
 	label_hint.text = ""
 	custom_minimum_size = Vector2.ZERO
 	size = Vector2.ZERO

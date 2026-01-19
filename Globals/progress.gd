@@ -20,9 +20,10 @@ enum UpgradeType {
 	PROFIT,
 	PRESTIGE_STARTING_WORKERS,
 	PRESTIGE_PICKAXE,
-	PRESTIGE_ARTIFACT,
+	PRESTIGE_EMERALDS,
+	PRESTIGE_ARTIFACTS,
+	PRESTIGE_ARCHAEOLOGY,
 	PRESTIGE_VISITOR,
-	PRESTIGE_ARCH,
 }
 
 enum InventoryItem {
@@ -257,11 +258,27 @@ func prestige() -> void:
 	prestige_level += 1
 	day = 0
 	money = 0
-	resources = {}
-	upgrades = {}
+	reset_resource(Progress.ResourceType.ROCK)
+	reset_resource(Progress.ResourceType.IRON)
+	reset_resource(Progress.ResourceType.COPPER)
+	reset_resource(Progress.ResourceType.SILVER)
+	reset_resource(Progress.ResourceType.GOLD)
+	reset_resource(Progress.ResourceType.PLATINUM)
+	reset_upgrade(Progress.UpgradeType.SPEED)
+	reset_upgrade(Progress.UpgradeType.ENERGY)
+	reset_upgrade(Progress.UpgradeType.STRENGTH)
+	reset_upgrade(Progress.UpgradeType.LUCK)
+	reset_upgrade(Progress.UpgradeType.SPAWN)
+	reset_upgrade(Progress.UpgradeType.PROFIT)
 	inventory = {}
 	add_resource(Progress.ResourceType.EMERALD, 1000)
 	save_progress()
+
+func reset_resource(res : Progress.ResourceType) -> void:
+	add_resource(res, get_resource(res) * (-1))
+
+func reset_upgrade(up : Progress.UpgradeType) -> void:
+	upgrades[up] = 0
 
 func get_prestige_level() -> int:
 	return prestige_level
@@ -310,12 +327,24 @@ func get_upgrade_description(up : UpgradeType) -> String:
 			return "More money from selling"
 		UpgradeType.PRESTIGE_STARTING_WORKERS:
 			return "Permanently starts with
-			+1 worker per level"
+			+1 worker/level"
 		UpgradeType.PRESTIGE_PICKAXE:
 			return "Permanently starts with
-			+1 strength per level"
+			+1 strength/level"
+		UpgradeType.PRESTIGE_EMERALDS:
+			return "1% chance/level of finding
+			emeralds (depth 100+)"
+		UpgradeType.PRESTIGE_ARTIFACTS:
+			return "20% chance/level of spawning
+			an artifact (depth 200+)"
+		UpgradeType.PRESTIGE_ARCHAEOLOGY:
+			return "Permanently starts with
+			+1 archearologist/level"
+		UpgradeType.PRESTIGE_VISITOR:
+			return "Visitors from another planet
+			came to help you dig"
 		_:
-			return "---------"
+			return ""
 
 func get_resource_chance() -> int:
 	return 10 + get_upgrade(Progress.UpgradeType.SPAWN) * 4
@@ -384,15 +413,15 @@ func get_upgrade_cost(up: UpgradeType) -> Array[int]:
 			cost = [0, 0, 0, 0, 50, 10, 0]
 		UpgradeType.PRESTIGE_STARTING_WORKERS:
 			cost = [0, 0, 0, 0, 0, 0, 250]
-		UpgradeType.PRESTIGE_STARTING_WORKERS:
-			cost = [0, 0, 0, 0, 0, 0, 250]
 		UpgradeType.PRESTIGE_PICKAXE:
 			cost = [0, 0, 0, 0, 0, 0, 500]
-		UpgradeType.PRESTIGE_ARTIFACT:
+		UpgradeType.PRESTIGE_EMERALDS:
+			cost = [0, 0, 0, 0, 0, 0, 250]
+		UpgradeType.PRESTIGE_ARTIFACTS:
 			cost = [0, 0, 0, 0, 0, 0, 600]
 		UpgradeType.PRESTIGE_VISITOR:
 			cost = [0, 0, 0, 0, 0, 0, 400]
-		UpgradeType.PRESTIGE_ARCH:
+		UpgradeType.PRESTIGE_ARCHAEOLOGY:
 			cost = [0, 0, 0, 0, 0, 0, 200]
 		_:
 			cost = [1, 0, 0, 0, 0, 0, 0]

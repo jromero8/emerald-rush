@@ -1,7 +1,7 @@
 extends PanelContainer
 
 func _ready() -> void:
-	visible = false
+	#visible = false
 	Game.show_prestige_upgrades.connect(_on_show_prestige_upgrades)
 
 func _on_show_prestige_upgrades() -> void:

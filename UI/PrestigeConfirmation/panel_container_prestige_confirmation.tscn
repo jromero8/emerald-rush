@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://d26hqt0qdke77"]
+
+[ext_resource type="Script" uid="uid://bkiiygx6ow7vk" path="res://UI/PrestigeConfirmation/panel_container_prestige_confirmation.gd" id="1_5a2nt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1u0xd"]
+
+[node name="PanelContainerPrestigeConfirmation" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1u0xd")
+script = ExtResource("1_5a2nt")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="LabelPrestige" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Prestige"
+
+[node name="LabelDescription" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Are you sure you want to prestige?
+-You'll collect 1000 Emeralds!
+-All other resources, money, upgrades 
+  and inventory will be lost
+-Day will reset to 1
+-The Emerald Cave will move 30 blocks down
+-Permanent upgrades will be available to unlock
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+
+[node name="ButtonCancel" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "No, Cancel!"
+
+[node name="ButtonPrestige" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Yes, Prestige"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ButtonCancel" to="." method="_on_button_cancel_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ButtonPrestige" to="." method="_on_button_prestige_pressed"]

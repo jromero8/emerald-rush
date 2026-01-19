@@ -22,6 +22,7 @@ var occlusion_neighbors_8 := [
 	Vector2i.DOWN + Vector2i.RIGHT
 ]
 var ground_level = -1
+var crystal_cave_pos : int = 1
 	
 @onready var main_ui: CanvasLayer = $MainUi
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
@@ -71,12 +72,14 @@ func mine(pos : Vector2i) -> bool:
 	if !resources.has(pos):
 		resources[pos] = Progress.get_amount_per_resource(resource_type)
 	var strength = Progress.get_upgrade(Progress.UpgradeType.STRENGTH) + 1
+	strength += Progress.get_upgrade(Progress.UpgradeType.PRESTIGE_PICKAXE)
 	var amount = resources[pos]
 	var amount_to_mine = strength
 	if amount < amount_to_mine:
 		amount_to_mine = amount
+	var double_mine_factor : int = 1
 	if is_chance_for_double():
-		amount_to_mine *= 2
+		double_mine_factor = 2
 		is_double = true
 	
 	var amount_mined = amount_to_mine
@@ -86,7 +89,7 @@ func mine(pos : Vector2i) -> bool:
 	else:
 		amount -= amount_to_mine
 	resources[pos] = amount
-	Progress.add_resource(resource_type, amount_mined)
+	Progress.add_resource(resource_type, amount_mined * double_mine_factor)
 	if resource_type == Progress.ResourceType.ROCK:
 		Audio.play_sound("mine")
 	else:
@@ -98,16 +101,13 @@ func mine(pos : Vector2i) -> bool:
 
 func generate_map() -> void:
 	tile_map_layer.clear()
-	var crystal_cave_pos : int = 2 + 100 * Progress.get_prestige_level()
+	crystal_cave_pos = 300 + 30 * Progress.get_prestige_level()
 	for i in range(0, crystal_cave_pos):
 		for j in range(-25, 25):
 			var res_coords : Vector2i = get_resource_cell_id(Progress.ResourceType.ROCK, i)
 			if rng.randi_range(1, 100) <= Progress.get_resource_chance():
 				if i > 0:
-					if rng.randi_range(1, 100) < 40:
-						res_coords = get_resource_cell_id(Progress.ResourceType.EMERALD, i)
-					else: 
-						res_coords = get_resource_cell_id(Progress.ResourceType.IRON, i)
+					res_coords = get_resource_cell_id(Progress.ResourceType.IRON, i)
 				if i > 20:
 					if rng.randi_range(1, 100) < 20:
 						res_coords = get_resource_cell_id(Progress.ResourceType.IRON, i)
@@ -130,13 +130,19 @@ func generate_map() -> void:
 						res_coords = get_resource_cell_id(Progress.ResourceType.GOLD, i)
 					else:
 						res_coords = get_resource_cell_id(Progress.ResourceType.PLATINUM, i)
+				if i > 100:
+					if rng.randi_range(1, 100) <= Progress.get_upgrade(Progress.UpgradeType.PRESTIGE_EMERALDS):
+						res_coords = get_resource_cell_id(Progress.ResourceType.EMERALD, i)
 			tile_map_layer.set_cell(Vector2i(j, i), 0, res_coords)
 	occlude_map()
 	create_crystal_cave(crystal_cave_pos)
 
 func occlude_map() -> void:
 	for cell : Vector2i in tile_map_layer.get_used_cells():
-		occlude_cell(cell)
+		var atl = tile_map_layer.get_cell_atlas_coords(cell)
+		var res_coords = get_resource_cell_id(Progress.ResourceType.EMERALD, 0)
+		if res_coords != atl:
+			occlude_cell(cell)
 
 func occlude_neighbors(cell : Vector2i) -> void:
 	for offset : Vector2i in occlusion_neighbors_8:
@@ -282,3 +288,6 @@ func get_depth() -> int:
 		if w_depth > depth:
 			depth = ceili(w_depth)
 	return depth
+
+func get_cave_pos() -> int:
+	return crystal_cave_pos

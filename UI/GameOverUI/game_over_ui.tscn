@@ -4,8 +4,17 @@
 
 [node name="PanelContainerGameOver" type="PanelContainer"]
 custom_minimum_size = Vector2(0, 177)
-offset_right = 6.0
-offset_bottom = 6.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -410.0
+offset_top = -94.0
+offset_right = 410.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_ssmmn")
@@ -13,6 +22,7 @@ script = ExtResource("1_ssmmn")
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -21,7 +31,7 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 5
+theme_override_constants/separation = 30
 
 [node name="LabelGameOver" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -31,8 +41,6 @@ horizontal_alignment = 1
 [node name="LabelThanks" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 1
-text = "Thank you for playing!
-Game made by Wired Pixels for the 1-BIT JAM 8"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
@@ -40,28 +48,22 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 50
 
-[node name="ButtonMainMenu" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="ButtonNextDay" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_default_cursor_shape = 2
-text = "Main Menu"
+text = "Next Day"
 
 [node name="ButtonPrestige" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Prestige
-(1000 emeralds)"
+text = "Prestige"
 
-[node name="TimerThanks" type="Timer" parent="."]
-wait_time = 4.0
-one_shot = true
-
-[node name="TimerPlayAgain" type="Timer" parent="."]
-wait_time = 8.0
+[node name="TimerButtons" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/ButtonMainMenu" to="." method="_on_button_play_again_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/ButtonNextDay" to="." method="_on_button_play_again_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/ButtonPrestige" to="." method="_on_button_prestige_pressed"]
-[connection signal="timeout" from="TimerThanks" to="." method="_on_timer_thanks_timeout"]
-[connection signal="timeout" from="TimerPlayAgain" to="." method="_on_timer_play_again_timeout"]
+[connection signal="timeout" from="TimerButtons" to="." method="_on_timer_buttons_timeout"]

@@ -67,6 +67,7 @@ up = 10
 [node name="PrestigeItemUi6" parent="MarginContainer/VBoxContainer/PanelContainer" instance=ExtResource("1_mtctl")]
 layout_mode = 2
 size_flags_horizontal = 7
+up = 11
 
 [node name="ButtonClose" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

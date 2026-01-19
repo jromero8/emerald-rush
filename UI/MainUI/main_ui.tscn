@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://baxaaffyoicup"]
+[gd_scene load_steps=18 format=3 uid="uid://baxaaffyoicup"]
 
 [ext_resource type="Script" uid="uid://urj13yytqn63" path="res://UI/MainUI/main_ui.gd" id="1_1nvy6"]
 [ext_resource type="PackedScene" uid="uid://bdhuuvemvfnj6" path="res://UI/UpgradeUI/upgrade_ui.tscn" id="2_1yvig"]
@@ -11,11 +11,16 @@
 [ext_resource type="PackedScene" uid="uid://ctoocosadmjcq" path="res://UI/PrestigeTreeUI/panel_container_prestige_tree.tscn" id="8_5wakv"]
 [ext_resource type="PackedScene" uid="uid://wagwop44p6uc" path="res://UI/ConfigUI/panel_container_config.tscn" id="10_4hoyo"]
 [ext_resource type="PackedScene" uid="uid://c88nnw5wbhb43" path="res://UI/HintUI/hint_ui.tscn" id="11_onv3x"]
+[ext_resource type="PackedScene" uid="uid://d26hqt0qdke77" path="res://UI/PrestigeConfirmation/panel_container_prestige_confirmation.tscn" id="12_pna6a"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_1yvig"]
 color = Color(1, 1, 1, 1)
 thickness = 2
 vertical = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pna6a"]
+atlas = ExtResource("3_4yaab")
+region = Rect2(32, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o0e8e"]
 atlas = ExtResource("3_4yaab")
@@ -24,6 +29,8 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_h6lqs"]
 atlas = ExtResource("3_4yaab")
 region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pna6a"]
 
 [node name="MainUi" type="CanvasLayer"]
 script = ExtResource("1_1nvy6")
@@ -83,30 +90,50 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainerDay" type="HBoxContainer" parent="."]
+[node name="VBoxContainerCenter" type="VBoxContainer" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -144.0
-offset_right = 144.0
-offset_bottom = 39.0
+offset_left = -164.0
+offset_right = 164.0
+offset_bottom = 74.0
 grow_horizontal = 2
+
+[node name="HBoxContainerDay" type="HBoxContainer" parent="VBoxContainerCenter"]
+layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
-[node name="LabelDay" type="Label" parent="HBoxContainerDay"]
+[node name="LabelDay" type="Label" parent="VBoxContainerCenter/HBoxContainerDay"]
 layout_mode = 2
 text = "Day 1"
 
-[node name="ButtonStartDay" type="Button" parent="HBoxContainerDay"]
+[node name="ButtonStartDay" type="Button" parent="VBoxContainerCenter/HBoxContainerDay"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "Start Day"
 
-[node name="ButtonEndDay" type="Button" parent="HBoxContainerDay"]
+[node name="ButtonEndDay" type="Button" parent="VBoxContainerCenter/HBoxContainerDay"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "End Day"
+
+[node name="HBoxContainerPrestige" type="HBoxContainer" parent="VBoxContainerCenter"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LabelPrestige" type="Label" parent="VBoxContainerCenter/HBoxContainerPrestige"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainerCenter/HBoxContainerPrestige"]
+layout_mode = 2
+
+[node name="TextureButtonPrestigeUpgrades" type="TextureButton" parent="VBoxContainerCenter/HBoxContainerPrestige/PanelContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_pna6a")
+stretch_mode = 4
 
 [node name="PanelContainerTired" type="PanelContainer" parent="."]
 visible = false
@@ -162,14 +189,6 @@ text = "Upgrades"
 
 [node name="PanelContainerGameOver" parent="." instance=ExtResource("7_h6lqs")]
 visible = false
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -364.0
-offset_top = 22.0
-offset_right = 365.0
-offset_bottom = 199.0
-grow_horizontal = 2
 size_flags_vertical = 0
 
 [node name="PanelContainerMaintitle" type="PanelContainer" parent="."]
@@ -398,9 +417,60 @@ visible = false
 top_level = true
 
 [node name="PanelContainerPrestigeTree" parent="." instance=ExtResource("8_5wakv")]
+visible = false
 
-[connection signal="pressed" from="HBoxContainerDay/ButtonStartDay" to="." method="_on_button_start_day_pressed"]
-[connection signal="pressed" from="HBoxContainerDay/ButtonEndDay" to="." method="_on_button_end_day_pressed"]
+[node name="PanelContainerPrestigeConfirmation" parent="." instance=ExtResource("12_pna6a")]
+visible = false
+
+[node name="PanelContainerConfirmNewGame" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_pna6a")
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainerConfirmNewGame"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerConfirmNewGame/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerConfirmNewGame/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LabelProgressLost" type="Label" parent="PanelContainerConfirmNewGame/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start a new game?
+All progress will be lost."
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerConfirmNewGame/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+
+[node name="ButtonCancel" type="Button" parent="PanelContainerConfirmNewGame/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Cancel"
+
+[node name="ButtonOk" type="Button" parent="PanelContainerConfirmNewGame/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "New Game"
+
+[connection signal="pressed" from="VBoxContainerCenter/HBoxContainerDay/ButtonStartDay" to="." method="_on_button_start_day_pressed"]
+[connection signal="pressed" from="VBoxContainerCenter/HBoxContainerDay/ButtonEndDay" to="." method="_on_button_end_day_pressed"]
+[connection signal="pressed" from="VBoxContainerCenter/HBoxContainerPrestige/PanelContainer/TextureButtonPrestigeUpgrades" to="." method="_on_texture_button_prestige_upgrades_pressed"]
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonRestartDay" to="." method="_on_button_restart_day_pressed"]
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonShop" to="." method="_on_button_shop_pressed"]
 [connection signal="pressed" from="PanelContainerTired/MarginContainer/VBoxContainer/HBoxContainer/ButtonUpgrades" to="." method="_on_button_upgrades_pressed"]
@@ -409,3 +479,5 @@ top_level = true
 [connection signal="pressed" from="PanelContainerMaintitle/MarginContainer/VBoxContainer/ButtonConfig" to="." method="_on_button_config_pressed"]
 [connection signal="pressed" from="VBoxContainerRight/HBoxContainer/TextureButtonConfig" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="PanelContainerUpgrades/MarginContainer/VBoxContainer/ButtonCloseUpgrades" to="." method="_on_button_close_upgrades_pressed"]
+[connection signal="pressed" from="PanelContainerConfirmNewGame/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ButtonCancel" to="." method="_on_button_cancel_pressed"]
+[connection signal="pressed" from="PanelContainerConfirmNewGame/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ButtonOk" to="." method="_on_button_ok_pressed"]

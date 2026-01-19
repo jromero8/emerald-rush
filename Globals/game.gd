@@ -1,9 +1,10 @@
 extends Node
 
 signal workers_tired
-signal show_hint(hint_text : String, gp : Vector2)
+signal show_hint(hint_text : String)
 signal hide_hint
 signal show_prestige_upgrades
+signal prestige_requested
 
 enum GameState {
 	MAIN_MENU,

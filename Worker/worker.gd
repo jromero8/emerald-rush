@@ -102,7 +102,6 @@ func _physics_process(delta: float) -> void:
 
 func mine() -> void:
 	if World.get_instance().mine(get_current_tile() + target):
-		print("anim")
 		animation_playerx_2.play("x2")
 	energy -= 1
 	update_energy_bar()

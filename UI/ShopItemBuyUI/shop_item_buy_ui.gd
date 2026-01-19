@@ -47,7 +47,7 @@ func _on_button_buy_pressed() -> void:
 
 
 func _on_label_hint_mouse_entered() -> void:
-	Game.show_hint.emit(Progress.get_shop_item_tooltip(shop_item), global_position)
+	Game.show_hint.emit(Progress.get_shop_item_tooltip(shop_item))
 
 
 func _on_label_hint_mouse_exited() -> void:
