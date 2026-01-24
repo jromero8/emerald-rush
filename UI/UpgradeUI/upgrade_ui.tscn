@@ -22,9 +22,21 @@ text = "Reduces Worker's cooldown"
 layout_mode = 2
 text = "Cost: 50R"
 
-[node name="ButtonBuy" type="Button" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ButtonDowngrade" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "This action will not return
+the resources spent."
+mouse_default_cursor_shape = 2
+text = "Downgrade"
+
+[node name="ButtonBuy" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 text = " Upgrade"
 
-[connection signal="pressed" from="VBoxContainer/ButtonBuy" to="." method="_on_button_buy_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonDowngrade" to="." method="_on_button_downgrade_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ButtonBuy" to="." method="_on_button_buy_pressed"]

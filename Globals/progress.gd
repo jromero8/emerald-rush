@@ -181,6 +181,14 @@ func buy_upgrade(up : UpgradeType, amount : int = 1) -> void:
 			upgrade_applied.emit(up)
 			progress_modified = true
 
+func downgrade_upgrade(up : UpgradeType) -> void:
+	if !upgrades.has(up):
+		upgrades[up] = 0
+	if upgrades[up] > 0:
+		upgrades[up] -= 1
+		upgrade_applied.emit(up)
+		progress_modified = true
+
 func get_upgrade(up : UpgradeType) -> int:
 	if !upgrades.has(up):
 		return 0
