@@ -29,10 +29,12 @@ var crystal_cave_pos : int = 1
 @onready var tile_map_layer_occlusion: TileMapLayer = $TileMapLayerOcclusion
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var tile_map_layer_crystal_background: TileMapLayer = $TileMapLayerCrystalBackground
+@onready var tile_map_layer_artifact: TileMapLayer = $TileMapLayerArtifact
 
 func _ready() -> void:
 	_instance = self
 	rng = RandomNumberGenerator.new()
+	rng.randomize()
 	generate_map()
 	create_workers()
 
@@ -68,7 +70,7 @@ func is_chance_for_double() -> bool:
 
 func mine(pos : Vector2i) -> bool:
 	var is_double = false
-	var resource_type = get_cell_resource_id(pos)
+	var resource_type := get_cell_resource_id(pos)
 	if !resources.has(pos):
 		resources[pos] = Progress.get_amount_per_resource(resource_type)
 	var strength = Progress.get_upgrade(Progress.UpgradeType.STRENGTH) + 1
@@ -90,7 +92,10 @@ func mine(pos : Vector2i) -> bool:
 		amount -= amount_to_mine
 	resources[pos] = amount
 	Progress.add_resource(resource_type, amount_mined * double_mine_factor)
-	if resource_type == Progress.ResourceType.ROCK:
+	if resource_type >= Progress.ResourceType.ARTIFACT_0:
+		Audio.play_sound("artifact")
+		Game.artifact_found.emit(resource_type)
+	elif resource_type == Progress.ResourceType.ROCK:
 		Audio.play_sound("mine")
 	else:
 		Audio.play_sound("mine_res")
@@ -134,8 +139,21 @@ func generate_map() -> void:
 					if rng.randi_range(1, 100) <= Progress.get_upgrade(Progress.UpgradeType.PRESTIGE_EMERALDS):
 						res_coords = get_resource_cell_id(Progress.ResourceType.EMERALD, i)
 			tile_map_layer.set_cell(Vector2i(j, i), 0, res_coords)
+	generate_artifacts()
 	occlude_map()
-	create_crystal_cave(crystal_cave_pos)
+	create_crystal_cave()
+
+func generate_artifacts() -> void:
+	var artifact_level = Progress.get_upgrade(Progress.UpgradeType.PRESTIGE_ARTIFACTS)
+	if artifact_level > 0:
+		if rng.randf() <= float(artifact_level) * 0.33:
+			var artifact_id = Progress.get_random_unlocked_artifact()
+			var rand_y = rng.randi_range(150, 180)
+			if artifact_id > -1:
+				var c : Vector2i = Vector2i(rng.randi_range(-9, 10), rand_y)
+				tile_map_layer.set_cell(c, 0, Progress.get_artifact_atlas_coords(artifact_id))
+				tile_map_layer_artifact.set_cell(c, 0, Vector2i(0, 14))
+
 
 func occlude_map() -> void:
 	for cell : Vector2i in tile_map_layer.get_used_cells():
@@ -160,8 +178,9 @@ func occlude_cell(cell : Vector2i) -> void:
 			tile_map_layer_occlusion.set_cell(cell, 0, Vector2i(0, 3))
 		else:
 			tile_map_layer_occlusion.set_cell(cell)
+			tile_map_layer_artifact.set_cell(cell)
 
-func create_crystal_cave(crystal_cave_pos : int) -> void:
+func create_crystal_cave() -> void:
 	var height = 15
 	for i in range(crystal_cave_pos, crystal_cave_pos + height):
 		if i == crystal_cave_pos + height - 1:
@@ -204,6 +223,30 @@ func get_resource_cell_id(res : Progress.ResourceType, depth : int) -> Vector2i:
 			return Vector2i(4, 1)
 		Progress.ResourceType.EMERALD:
 			return Vector2i(5, 1)
+		Progress.ResourceType.ARTIFACT_0:
+			return Vector2i(0, 9)
+		Progress.ResourceType.ARTIFACT_1:
+			return Vector2i(1, 9)
+		Progress.ResourceType.ARTIFACT_2:
+			return Vector2i(2, 9)
+		Progress.ResourceType.ARTIFACT_3:
+			return Vector2i(3, 9)
+		Progress.ResourceType.ARTIFACT_4:
+			return Vector2i(4, 9)
+		Progress.ResourceType.ARTIFACT_5:
+			return Vector2i(5, 9)
+		Progress.ResourceType.ARTIFACT_6:
+			return Vector2i(0, 10)
+		Progress.ResourceType.ARTIFACT_7:
+			return Vector2i(1, 10)
+		Progress.ResourceType.ARTIFACT_8:
+			return Vector2i(2, 10)
+		Progress.ResourceType.ARTIFACT_9:
+			return Vector2i(3, 10)
+		Progress.ResourceType.ARTIFACT_10:
+			return Vector2i(4, 10)
+		Progress.ResourceType.ARTIFACT_11:
+			return Vector2i(5, 10)
 		_:
 			var x = min(depth / 5 + 1, 3)
 			if depth == 0:
@@ -228,6 +271,18 @@ func is_resource(pos : Vector2i) -> bool:
 		get_resource_cell_id(Progress.ResourceType.GOLD, 0),
 		get_resource_cell_id(Progress.ResourceType.PLATINUM, 0),
 		get_resource_cell_id(Progress.ResourceType.EMERALD, 0),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_0, 0),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_1, 1),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_2, 2),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_3, 3),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_4, 4),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_5, 5),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_6, 6),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_7, 7),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_8, 8),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_9, 9),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_10, 10),
+		get_resource_cell_id(Progress.ResourceType.ARTIFACT_11, 11),
 	]
 	return resources_coords.has(atlas_coords)
 
@@ -247,6 +302,30 @@ func get_cell_resource_id(pos : Vector2i) -> Progress.ResourceType:
 			return Progress.ResourceType.PLATINUM
 		Vector2i(5, 1):
 			return Progress.ResourceType.EMERALD
+		Vector2i(0, 9):
+			return Progress.ResourceType.ARTIFACT_0
+		Vector2i(1, 9):
+			return Progress.ResourceType.ARTIFACT_1
+		Vector2i(2, 9):
+			return Progress.ResourceType.ARTIFACT_2
+		Vector2i(3, 9):
+			return Progress.ResourceType.ARTIFACT_3
+		Vector2i(4, 9):
+			return Progress.ResourceType.ARTIFACT_4
+		Vector2i(5, 9):
+			return Progress.ResourceType.ARTIFACT_5
+		Vector2i(0, 10):
+			return Progress.ResourceType.ARTIFACT_6
+		Vector2i(1, 10):
+			return Progress.ResourceType.ARTIFACT_7
+		Vector2i(2, 10):
+			return Progress.ResourceType.ARTIFACT_8
+		Vector2i(3, 10):
+			return Progress.ResourceType.ARTIFACT_9
+		Vector2i(4, 10):
+			return Progress.ResourceType.ARTIFACT_10
+		Vector2i(5, 10):
+			return Progress.ResourceType.ARTIFACT_11
 		_:
 			return Progress.ResourceType.ROCK
 

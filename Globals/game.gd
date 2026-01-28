@@ -5,6 +5,9 @@ signal show_hint(hint_text : String)
 signal hide_hint
 signal show_prestige_upgrades
 signal prestige_requested
+signal artifact_found(res : Progress.ResourceType)
+signal artifact_show(res : Progress.ResourceType)
+signal show_artifact_panel(res : Progress.ResourceType)
 
 enum GameState {
 	MAIN_MENU,

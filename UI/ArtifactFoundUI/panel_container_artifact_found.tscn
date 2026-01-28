@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://bqcr42sj6w6rn"]
+
+[ext_resource type="Script" uid="uid://dcxypixgpjypj" path="res://UI/ArtifactFoundUI/panel_container_artifact_found.gd" id="1_vc6xi"]
+[ext_resource type="Texture2D" uid="uid://bkq8rkr6cj285" path="res://World/world.png" id="2_bblkl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xd8m4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mgiel"]
+atlas = ExtResource("2_bblkl")
+region = Rect2(0, 176, 16, 16)
+
+[node name="PanelContainerArtifactFound" type="PanelContainer" unique_id=1161642759]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xd8m4")
+script = ExtResource("1_vc6xi")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=115321847]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1889446638]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1580676877]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="LabelNewArtifactFound" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=795989076]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "New artifact found!"
+
+[node name="LabelArtifactName" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=186841254]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 48
+text = "Tablet"
+
+[node name="LabelArtifactDescription" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1606837296]
+custom_minimum_size = Vector2(600, 50)
+layout_mode = 2
+text = "An ancient tablet"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TextureRectArtifact" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1440202638]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = SubResource("AtlasTexture_mgiel")
+stretch_mode = 4
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=791634355]
+modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1183370564]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 50
+
+[node name="ButtonClose" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=208518337]
+layout_mode = 2
+text = "Close"
+
+[node name="ButtonShowArtifacts" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1546827715]
+layout_mode = 2
+text = "View
+Artifacts"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ButtonClose" to="." method="_on_button_close_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ButtonShowArtifacts" to="." method="_on_button_show_artifacts_pressed"]

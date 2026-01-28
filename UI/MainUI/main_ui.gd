@@ -23,10 +23,13 @@ extends CanvasLayer
 @onready var label_prestige: Label = $VBoxContainerCenter/HBoxContainerPrestige/LabelPrestige
 @onready var h_box_container_day: HBoxContainer = $VBoxContainerCenter/HBoxContainerDay
 @onready var panel_container_confirm_new_game: PanelContainer = $PanelContainerConfirmNewGame
+@onready var panel_container_artifacts_ui: PanelContainer = $PanelContainerArtifactsUI
+@onready var texture_button_artifacts: TextureButton = $VBoxContainerCenter/HBoxContainerDay/TextureButtonArtifacts
 
 func _ready() -> void:
 	Progress.money_updated.connect(_on_money_updated)
 	Progress.inventory_updated.connect(_on_inventory_updated)
+	Progress.resource_updated.connect(_on_resource_updated)
 	button_continue.visible = Progress.day > 0 or Progress.prestige_level > 0
 	hide_all_panels()
 	if Game.game_state == Game.GameState.STARTED:
@@ -55,6 +58,7 @@ func _ready() -> void:
 		if Game.game_state == Game.GameState.STARTED:
 			h_box_container_prestige.visible = true
 			label_prestige.text = "Prestige " + str(Progress.prestige_level) + " "
+	_on_resource_updated(Progress.ResourceType.ARTIFACT_0)
 
 func _process(_delta: float) -> void:
 	if Game.game_over:
@@ -82,6 +86,11 @@ func show_tired_panel() -> void:
 func _on_inventory_updated(it : Progress.InventoryItem) -> void:
 	if it == Progress.InventoryItem.WORKER:
 		refresh_workers()
+
+func _on_resource_updated(res : Progress.ResourceType) -> void:
+	if res >= Progress.ResourceType.ARTIFACT_0:
+		texture_button_artifacts.visible = Progress.has_artifacts()
+
 
 func refresh_workers() -> void:
 	label_workers.text = str(Progress.get_inventory(Progress.InventoryItem.WORKER) + 1 + Progress.get_upgrade(Progress.UpgradeType.PRESTIGE_STARTING_WORKERS))
@@ -160,3 +169,7 @@ func _on_button_cancel_pressed() -> void:
 
 func _on_button_ok_pressed() -> void:
 	start_new_game()
+
+
+func _on_texture_button_artifacts_pressed() -> void:
+	panel_container_artifacts_ui.visible = true

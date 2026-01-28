@@ -31,6 +31,7 @@ func update_ui() -> void:
 		up == Progress.UpgradeType.PRESTIGE_STARTING_WORKERS
 		or up == Progress.UpgradeType.PRESTIGE_PICKAXE
 		or up == Progress.UpgradeType.PRESTIGE_EMERALDS
+		or up == Progress.UpgradeType.PRESTIGE_ARTIFACTS
 		):
 		panel_container_soon.visible = false
 	else:

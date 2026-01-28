@@ -26,13 +26,22 @@ func update_ui() -> void:
 	label_title.text = Progress.get_upgrade_title(upgrade_type) + " (" + str(Progress.get_upgrade(upgrade_type)) + " / " + str(Progress.get_max_upgrade(upgrade_type)) + ")"
 	label_description.text = Progress.get_upgrade_description(upgrade_type)
 	label_cost.text = Progress.get_upgrade_cost_description(upgrade_type)
-	button_buy.disabled = !Progress.can_afford_upgrade(upgrade_type)
 	if Progress.is_max_upgrade(upgrade_type):
 		button_buy.disabled = true
 		button_buy.mouse_default_cursor_shape = Control.CURSOR_ARROW
-		button_buy.modulate = Color.BLACK
-	button_downgrade.disabled = Progress.get_upgrade(upgrade_type) <= 0
-	button_downgrade.visible = Progress.get_upgrade(upgrade_type) > 0
+		button_downgrade.modulate = Color.WHITE
+	else:
+		button_buy.disabled = !Progress.can_afford_upgrade(upgrade_type)
+		button_buy.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		button_downgrade.modulate = Color.WHITE
+	if Progress.get_upgrade(upgrade_type) > 0:
+		button_downgrade.visible = true
+		button_downgrade.disabled = false
+		button_downgrade.modulate = Color.WHITE
+	else:
+		button_downgrade.visible = true
+		button_downgrade.disabled = true
+		button_downgrade.modulate = Color.BLACK
 
 
 func _on_button_buy_pressed() -> void:

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bqe0iolhxmrcx"]
+[gd_resource type="TileSet" format=3 uid="uid://bqe0iolhxmrcx"]
 
 [ext_resource type="Texture2D" uid="uid://cj5cmyxp5lvwg" path="res://Mountain/mountain.png" id="1_6v885"]
 

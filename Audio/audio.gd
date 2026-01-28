@@ -134,13 +134,11 @@ func get_music_volume() -> float:
 		return music_player.volume_db
 
 func set_sound_volume(_volume_db : float = 0) -> void:
-	print("-")
 	sound_volume_db = _volume_db
 	if sound_volume_db <= -50:
 		sound_volume_db = -1000
 	for c : AudioStreamPlayer in get_children():
 		if c != music_player:
-			print("volume")
 			c.volume_db = sound_volume_db
 
 func get_sound_volume() -> float:

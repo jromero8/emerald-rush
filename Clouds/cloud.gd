@@ -14,11 +14,11 @@ enum CloudType {
 func _ready() -> void:
 	
 	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
-	cloud_type = rng.randi_range(0, 2)
+	cloud_type = rng.randi_range(0, 2) as CloudType
 	
 	match cloud_type:
 		CloudType.CLOUD_LARGE:
-			sprite_2d.hframes = 1
+			sprite_2d.hframes = 1 
 			sprite_2d.vframes = 2
 			sprite_2d.frame = 0
 		CloudType.CLOUD_SMALL_1:

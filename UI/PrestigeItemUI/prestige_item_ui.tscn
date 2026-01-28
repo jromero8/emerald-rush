@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://dyl40b33jys7t"]
+[gd_scene format=3 uid="uid://dyl40b33jys7t"]
 
 [ext_resource type="Script" uid="uid://d2o4oc4wmd0ck" path="res://UI/PrestigeItemUI/prestige_item_ui.gd" id="1_7qe0h"]
 [ext_resource type="Texture2D" uid="uid://sru08tfyi5xa" path="res://UI/PrestigeItemUI/prestige_icons.png" id="1_xfcho"]
@@ -8,7 +8,7 @@ resource_local_to_scene = true
 atlas = ExtResource("1_xfcho")
 region = Rect2(0, 0, 16, 16)
 
-[node name="PrestigeItemUi" type="PanelContainer"]
+[node name="PrestigeItemUi" type="PanelContainer" unique_id=1345467094]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -24,55 +24,55 @@ size_flags_horizontal = 4
 script = ExtResource("1_7qe0h")
 up = 6
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1211566946]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1131876038]
 layout_mode = 2
 
-[node name="LabelTitle" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="LabelTitle" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1729684082]
 layout_mode = 2
 text = "Steel Pickaxe"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1183286741]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=171876940]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_7qe0h")
 stretch_mode = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1190282471]
 layout_mode = 2
 
-[node name="LabelLevel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="LabelLevel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=7808619]
 layout_mode = 2
 text = "0/5"
 
-[node name="LabelCost" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="LabelCost" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1035560323]
 layout_mode = 2
 text = "Emeralds: 250"
 
-[node name="LabelDescription" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="LabelDescription" type="Label" parent="MarginContainer/VBoxContainer" unique_id=771400556]
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 24
 
-[node name="PanelContainerSoon" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+[node name="PanelContainerSoon" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=974642927]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainerSoon"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/PanelContainerSoon" unique_id=1159706691]
 layout_mode = 2
 text = "Soon!"
 
-[node name="ButtonUpgrade" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="ButtonUpgrade" type="Button" parent="MarginContainer/VBoxContainer" unique_id=2122764015]
 layout_mode = 2
 size_flags_horizontal = 4
 mouse_default_cursor_shape = 2

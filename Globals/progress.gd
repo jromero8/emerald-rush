@@ -8,8 +8,19 @@ enum ResourceType {
 	GOLD,
 	PLATINUM,
 	EMERALD,
+	ARTIFACT_0,
+	ARTIFACT_1,
+	ARTIFACT_2,
+	ARTIFACT_3,
+	ARTIFACT_4,
+	ARTIFACT_5,
+	ARTIFACT_6,
+	ARTIFACT_7,
+	ARTIFACT_8,
+	ARTIFACT_9,
+	ARTIFACT_10,
+	ARTIFACT_11,
 }
-
 
 enum UpgradeType {
 	SPEED,
@@ -39,7 +50,7 @@ const amount_per_resource = [
 	12,
 	15,
 	20,
-	20
+	20,
 ]
 
 const money_per_resource = [
@@ -49,7 +60,8 @@ const money_per_resource = [
 	50,
 	120,
 	200,
-	0
+	0,
+	0,
 ]
 
 const item_base_cost = [
@@ -78,12 +90,12 @@ var force_save = false
 var progress_modified = false
 
 func _ready() -> void:
+	randomize()
 	load_progress()
 
 func _ssssphysics_process(_delta: float) -> void:
 	if force_save or (Time.get_ticks_msec() > last_save + save_interval and progress_modified):
 		var p_msg = "progress saved" if !force_save else "progress saved (forced)"
-		print(p_msg)
 		force_save = false
 		progress_modified = false
 		last_save = Time.get_ticks_msec()
@@ -140,6 +152,62 @@ func get_resource(res : Progress.ResourceType) -> int:
 	return resources[res]
 
 func get_resource_title(rs : ResourceType) -> String:
+	if rs >= ResourceType.ARTIFACT_0:
+		match rs:
+			ResourceType.ARTIFACT_0:
+				return "Runic Stone Tablet"
+			ResourceType.ARTIFACT_1:
+				return "Ancient Pickaxe Head"
+			ResourceType.ARTIFACT_2:
+				return "Fossilized Trilobite"
+			ResourceType.ARTIFACT_3:
+				return "Obsidian Ritual Dagger"
+			ResourceType.ARTIFACT_4:
+				return "Ancient Key"
+			ResourceType.ARTIFACT_5:
+				return "Broken Stone Pillar"
+			ResourceType.ARTIFACT_6:
+				return "Alien Tech Scrap"
+			ResourceType.ARTIFACT_7:
+				return "FTL Drive Fragment"
+			ResourceType.ARTIFACT_8:
+				return "Alien Drone"
+			ResourceType.ARTIFACT_9:
+				return "Energy Cell Core"
+			ResourceType.ARTIFACT_10:
+				return "Alien Signal Antenna"
+			ResourceType.ARTIFACT_11:
+				return "Alien Exploration Probe"
+	var res_name : String = ResourceType.keys()[rs]
+	return res_name.capitalize()
+
+func get_resource_description(rs : ResourceType) -> String:
+	if rs >= ResourceType.ARTIFACT_0:
+		match rs:
+			ResourceType.ARTIFACT_0:
+				return "Covered in unreadable symbols, possibly part of an old civilization or ritual site."
+			ResourceType.ARTIFACT_1:
+				return "Made from an unknown alloy, lighter and stronger than modern metal."
+			ResourceType.ARTIFACT_2:
+				return "A perfectly preserved ancient sea creature, hinting that the mine was once underwater."
+			ResourceType.ARTIFACT_3:
+				return "Razor-sharp despite its age, likely ceremonial rather than practical."
+			ResourceType.ARTIFACT_4:
+				return "A timeworn key once used to unlock sealed chambers deep below."
+			ResourceType.ARTIFACT_5:
+				return "A fragment of a collapsed column from a forgotten structure."
+			ResourceType.ARTIFACT_6:
+				return "Twisted fragments of unknown technology."
+			ResourceType.ARTIFACT_7:
+				return "A warped piece of faster-than-light technology."
+			ResourceType.ARTIFACT_8:
+				return "An autonomous unit built to assist its creators with labor, maintenance, and observation."
+			ResourceType.ARTIFACT_9:
+				return "A smooth capsule that hums softly when struck."
+			ResourceType.ARTIFACT_10:
+				return "A transmitter designed to communicate across vast distances."
+			ResourceType.ARTIFACT_11:
+				return "An autonomous flying device designed to scan the surface and atmosphere before landing."
 	var res_name : String = ResourceType.keys()[rs]
 	return res_name.capitalize()
 
@@ -293,10 +361,16 @@ func get_prestige_level() -> int:
 
 
 func get_amount_per_resource(res : ResourceType) -> int:
-	return amount_per_resource[res]
+	if res > 6:
+		return 1
+	else:
+		return amount_per_resource[res]
 
 func get_resource_value(res) -> int:
-	return money_per_resource[res]
+	if res > 6:
+		return 0
+	else:
+		return money_per_resource[res]
 
 
 func get_upgrade_title(up : UpgradeType) -> String:
@@ -343,8 +417,8 @@ func get_upgrade_description(up : UpgradeType) -> String:
 			return "1% chance/level of finding
 			emeralds (depth 100+)"
 		UpgradeType.PRESTIGE_ARTIFACTS:
-			return "20% chance/level of spawning
-			an artifact (depth 200+)"
+			return "33% chance/level of spawning
+			an artifact (depth 150+)"
 		UpgradeType.PRESTIGE_ARCHAEOLOGY:
 			return "Permanently starts with
 			+1 archearologist/level"
@@ -426,7 +500,7 @@ func get_upgrade_cost(up: UpgradeType) -> Array[int]:
 		UpgradeType.PRESTIGE_EMERALDS:
 			cost = [0, 0, 0, 0, 0, 0, 250]
 		UpgradeType.PRESTIGE_ARTIFACTS:
-			cost = [0, 0, 0, 0, 0, 0, 600]
+			cost = [0, 0, 0, 0, 0, 0, 300]
 		UpgradeType.PRESTIGE_VISITOR:
 			cost = [0, 0, 0, 0, 0, 0, 400]
 		UpgradeType.PRESTIGE_ARCHAEOLOGY:
@@ -464,3 +538,34 @@ func debug_mode() -> void:
 	add_resource(ResourceType.SILVER, 1000000)
 	add_resource(ResourceType.GOLD, 1000000)
 	add_resource(ResourceType.PLATINUM, 1000000)
+
+func has_artifacts() -> bool:
+	for r : ResourceType in ResourceType.values():
+		if r >= ResourceType.ARTIFACT_0:
+			if get_resource(r) > 0:
+				return true
+	return false
+
+func get_random_unlocked_artifact() -> int:
+	var unlocked_ids: Array[int] = []
+
+	for r : ResourceType in ResourceType.values():
+		if r >= ResourceType.ARTIFACT_0:
+			if get_resource(r) == 0:
+				unlocked_ids.append(r)
+	if unlocked_ids.is_empty():
+		return -1
+	else:
+		var rng_art = unlocked_ids[randi_range(0, unlocked_ids.size() - 1)]
+		return rng_art
+	
+
+func get_artifact_atlas_coords(res : ResourceType, is_icon : bool = false) -> Vector2i:
+		var art_x : int = res - 7
+		var art_y : int = 9
+		if art_x > 5:
+			art_x = art_x - 6
+			art_y = 10
+		if is_icon:
+			art_y += 2
+		return Vector2i(art_x, art_y)

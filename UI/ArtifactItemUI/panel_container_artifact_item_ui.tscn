@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bp1dv3pxbwpy"]
+
+[ext_resource type="Script" uid="uid://bid3q4kmk5ihf" path="res://UI/ArtifactItemUI/panel_container_artifact_item_ui.gd" id="1_bxp1x"]
+[ext_resource type="Texture2D" uid="uid://bkq8rkr6cj285" path="res://World/world.png" id="2_ouvyn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5kcl"]
+resource_local_to_scene = true
+atlas = ExtResource("2_ouvyn")
+region = Rect2(0, 208, 16, 16)
+
+[node name="PanelContainerArtifactItemUI" type="PanelContainer" unique_id=302980748]
+custom_minimum_size = Vector2(170, 128)
+script = ExtResource("1_bxp1x")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1548801826]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="LabelArtifactTitle" type="Label" parent="VBoxContainer" unique_id=1563556687]
+custom_minimum_size = Vector2(50, 102)
+layout_mode = 2
+text = "Missing"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer" unique_id=1070827344]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_y5kcl")
+stretch_mode = 4
+
+[connection signal="pressed" from="VBoxContainer/TextureButton" to="." method="_on_texture_button_pressed"]

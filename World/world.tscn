@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://b11iqk6n1u2tt"]
+[gd_scene format=4 uid="uid://b11iqk6n1u2tt"]
 
 [ext_resource type="Script" uid="uid://b45lhhb276yxu" path="res://World/world.gd" id="1_8a836"]
 [ext_resource type="TileSet" uid="uid://db23fbuwcvxgn" path="res://World/world_tile_set.tres" id="1_62w18"]
@@ -8,65 +8,68 @@
 [ext_resource type="TileSet" uid="uid://bqe0iolhxmrcx" path="res://Mountain/mountain_tile_set.tres" id="3_yf0ba"]
 [ext_resource type="PackedScene" uid="uid://70defpp8571s" path="res://Clouds/cloud.tscn" id="5_k8do8"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" unique_id=916168517]
 script = ExtResource("1_8a836")
 
-[node name="Sun" parent="." instance=ExtResource("2_yf0ba")]
+[node name="Sun" parent="." unique_id=194273920 instance=ExtResource("2_yf0ba")]
 position = Vector2(225, -161)
 
-[node name="TileMapLayerCrystalBackground" type="TileMapLayer" parent="."]
+[node name="TileMapLayerCrystalBackground" type="TileMapLayer" parent="." unique_id=1095977014]
 tile_set = ExtResource("1_62w18")
 
-[node name="TileMapLayerMountains2" type="TileMapLayer" parent="."]
+[node name="TileMapLayerMountains2" type="TileMapLayer" parent="." unique_id=1270196822]
 position = Vector2(-19, -43)
 tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAA=")
 tile_set = ExtResource("3_yf0ba")
 
-[node name="TileMapLayerMountains" type="TileMapLayer" parent="."]
+[node name="TileMapLayerMountains" type="TileMapLayer" parent="." unique_id=1174998681]
 position = Vector2(47, -26)
 tile_map_data = PackedByteArray("AAAAAP//AAAAAAEAAAA=")
 tile_set = ExtResource("3_yf0ba")
 
-[node name="TileMapLayerTreesDark" type="TileMapLayer" parent="."]
+[node name="TileMapLayerTreesDark" type="TileMapLayer" parent="." unique_id=391521349]
 position = Vector2(-0.71, 0)
 tile_map_data = PackedByteArray("AAACAP//AAABAAEAAAADAP//AAABAAEAAAAEAP//AAABAAEAAAAFAP//AAABAAEAAAD5////AAABAAEAAAD6////AAABAAEAAAD7////AAABAAEAAAD8////AAABAAEAAAD9////AAABAAEAAAD+////AAABAAEAAAD/////AAABAAEAAAAAAP//AAABAAEAAAAHAP//AAABAAEAAAAGAP//AAABAAEAAAABAP//AAABAAEAAAA=")
 tile_set = ExtResource("2_3f78f")
 
-[node name="TileMapLayerTreesBack" type="TileMapLayer" parent="."]
+[node name="TileMapLayerTreesBack" type="TileMapLayer" parent="." unique_id=1530811320]
 position = Vector2(32, 0)
 tile_map_data = PackedByteArray("AAD7////AAABAAAAAAACAP//AAABAAAAAAADAP//AAABAAAAAAD8////AAABAAAAAAD6////AAABAAAAAAD5////AAAAAAEAAAD4////AAAAAAEAAAAEAP//AAABAAAAAAAFAP//AAAAAAEAAAAGAP//AAAAAAAAAAA=")
 tile_set = ExtResource("2_3f78f")
 
-[node name="TileMapLayerTrees" type="TileMapLayer" parent="."]
+[node name="TileMapLayerTrees" type="TileMapLayer" parent="." unique_id=93342009]
 tile_map_data = PackedByteArray("AAD7////AAAAAAEAAAD8////AAAAAAAAAAADAP//AAAAAAEAAAAEAP//AAAAAAAAAAAFAP//AAABAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAEAAAD6////AAAAAAEAAAD5////AAAAAAEAAAA=")
 tile_set = ExtResource("2_3f78f")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1907462689]
 tile_set = ExtResource("1_62w18")
 
-[node name="TileMapLayerOcclusion" type="TileMapLayer" parent="."]
+[node name="TileMapLayerOcclusion" type="TileMapLayer" parent="." unique_id=1260347994]
 tile_set = ExtResource("1_62w18")
 
-[node name="MainUi" parent="." instance=ExtResource("3_j8job")]
+[node name="TileMapLayerArtifact" type="TileMapLayer" parent="." unique_id=53513991]
+tile_set = ExtResource("1_62w18")
 
-[node name="TimerTired" type="Timer" parent="."]
+[node name="MainUi" parent="." unique_id=982895 instance=ExtResource("3_j8job")]
+
+[node name="TimerTired" type="Timer" parent="." unique_id=1609470348]
 wait_time = 0.2
 autostart = true
 
-[node name="Cloud" parent="." instance=ExtResource("5_k8do8")]
+[node name="Cloud" parent="." unique_id=419566969 instance=ExtResource("5_k8do8")]
 position = Vector2(-178, -110)
 
-[node name="Cloud2" parent="." instance=ExtResource("5_k8do8")]
+[node name="Cloud2" parent="." unique_id=1945217894 instance=ExtResource("5_k8do8")]
 position = Vector2(4, -101)
 
-[node name="Cloud3" parent="." instance=ExtResource("5_k8do8")]
+[node name="Cloud3" parent="." unique_id=662391266 instance=ExtResource("5_k8do8")]
 position = Vector2(178, -120)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1985808044]
 position = Vector2(8, -42)
 zoom = Vector2(2, 2)
 
-[node name="Cloud4" parent="." instance=ExtResource("5_k8do8")]
+[node name="Cloud4" parent="." unique_id=647675232 instance=ExtResource("5_k8do8")]
 position = Vector2(378, -108)
 
 [connection signal="timeout" from="TimerTired" to="." method="_on_timer_tired_timeout"]

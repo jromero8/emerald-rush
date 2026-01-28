@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://deadn3cptb4is"]
+[gd_scene format=3 uid="uid://deadn3cptb4is"]
 
 [ext_resource type="Texture2D" uid="uid://bkq8rkr6cj285" path="res://World/world.png" id="1_5f4ic"]
 [ext_resource type="Script" uid="uid://fenx44wq442v" path="res://Spark/spark.gd" id="1_i8gik"]
@@ -59,22 +59,19 @@ _data = {
 &"spark_2": SubResource("Animation_xinar")
 }
 
-[node name="Spark" type="Node2D"]
+[node name="Spark" type="Node2D" unique_id=1131522501]
 script = ExtResource("1_i8gik")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=606701732]
 texture = ExtResource("1_5f4ic")
 hframes = 16
 vframes = 16
 frame = 64
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_xinar")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1833923379]
+libraries/ = SubResource("AnimationLibrary_xinar")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="." unique_id=485512232]
 one_shot = true
-autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
